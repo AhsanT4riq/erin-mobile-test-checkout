@@ -1,0 +1,26 @@
+{
+    "name": "mobile-checkout-backend",
+    "version": "1.0.0",
+    "description": "Mock GraphQL API for Mobile Checkout",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node src/index.js",
+        "dev": "nodemon src/index.js",
+        "lint": "eslint .",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@apollo/server": "^4.10.0",
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "graphql": "^16.8.1",
+        "graphql-tag": "^2.12.6",
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "eslint": "^8.56.0",
+        "jest": "^29.7.0",
+        "nodemon": "^3.0.3"
+    }
+}

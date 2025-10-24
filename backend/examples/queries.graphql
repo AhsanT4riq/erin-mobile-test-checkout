@@ -1,0 +1,138 @@
+# Example GraphQL Queries
+
+# Get a user by ID
+query GetUser($userId: ID!) {
+  user(id: $userId) {
+    id
+    firstName
+    lastName
+    email
+    phone
+    company
+    createdAt
+  }
+}
+
+# Get all users
+query GetAllUsers {
+  users {
+    id
+    firstName
+    lastName
+    email
+  }
+}
+
+# Get cart by ID
+query GetCart($cartId: ID!) {
+  cart(id: $cartId) {
+    id
+    userId
+    items {
+      id
+      productName
+      description
+      price
+      quantity
+    }
+    subtotal
+    shipping
+    tax
+    total
+  }
+}
+
+# Get cart by user ID
+query GetCartByUser($userId: ID!) {
+  cartByUser(userId: $userId) {
+    id
+    items {
+      id
+      productName
+      price
+      quantity
+    }
+    total
+  }
+}
+
+# Get addresses for a user
+query GetUserAddresses($userId: ID!) {
+  addressesByUser(userId: $userId) {
+    id
+    streetAddress
+    apartmentSuite
+    city
+    stateProvince
+    zipPostalCode
+    country
+    isDefault
+  }
+}
+
+# Get an order by ID
+query GetOrder($orderId: ID!) {
+  order(id: $orderId) {
+    id
+    orderNumber
+    status
+    user {
+      firstName
+      lastName
+      email
+    }
+    shippingAddress {
+      streetAddress
+      city
+      stateProvince
+      zipPostalCode
+    }
+    items {
+      productName
+      price
+      quantity
+    }
+    subtotal
+    shipping
+    tax
+    total
+    estimatedDeliveryStart
+    estimatedDeliveryEnd
+    createdAt
+  }
+}
+
+# Get order by order number
+query GetOrderByNumber($orderNumber: String!) {
+  orderByNumber(orderNumber: $orderNumber) {
+    id
+    orderNumber
+    status
+    total
+    createdAt
+  }
+}
+
+# Get user's orders
+query GetUserOrders($userId: ID!) {
+  ordersByUser(userId: $userId) {
+    id
+    orderNumber
+    status
+    total
+    createdAt
+  }
+}
+
+# Get payment methods
+query GetPaymentMethods($userId: ID!) {
+  paymentMethods(userId: $userId) {
+    id
+    cardholderName
+    cardLastFour
+    cardBrand
+    expiryMonth
+    expiryYear
+    isDefault
+  }
+}

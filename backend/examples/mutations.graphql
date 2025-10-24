@@ -1,0 +1,218 @@
+# Example GraphQL Mutations
+
+# Create a new user
+mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    id
+    firstName
+    lastName
+    email
+    phone
+    createdAt
+  }
+}
+
+# Example variables:
+# {
+#   "input": {
+#     "firstName": "John",
+#     "lastName": "Doe",
+#     "email": "john.doe@example.com",
+#     "phone": "+1 (555) 123-4567",
+#     "company": "Tech Corp"
+#   }
+# }
+
+# Update user
+mutation UpdateUser($userId: ID!, $input: UpdateUserInput!) {
+  updateUser(id: $userId, input: $input) {
+    id
+    firstName
+    lastName
+    email
+  }
+}
+
+# Create address
+mutation CreateAddress($input: CreateAddressInput!) {
+  createAddress(input: $input) {
+    id
+    streetAddress
+    city
+    stateProvince
+    zipPostalCode
+    country
+    isDefault
+  }
+}
+
+# Example variables:
+# {
+#   "input": {
+#     "userId": "user-id-here",
+#     "streetAddress": "123 Main Street",
+#     "apartmentSuite": "Apt 4B",
+#     "city": "New York",
+#     "stateProvince": "NY",
+#     "zipPostalCode": "10001",
+#     "country": "United States",
+#     "deliveryInstructions": "Leave at front door",
+#     "isDefault": true
+#   }
+# }
+
+# Create a new cart
+mutation CreateCart($userId: ID) {
+  createCart(userId: $userId) {
+    id
+    userId
+    items {
+      id
+      productName
+      price
+      quantity
+    }
+    total
+  }
+}
+
+# Add item to cart
+mutation AddToCart($cartId: ID!, $productId: ID!, $quantity: Int!) {
+  addToCart(cartId: $cartId, productId: $productId, quantity: $quantity) {
+    id
+    items {
+      id
+      productName
+      price
+      quantity
+    }
+    subtotal
+    shipping
+    tax
+    total
+  }
+}
+
+# Example variables:
+# {
+#   "cartId": "cart-id-here",
+#   "productId": "prod-1",
+#   "quantity": 2
+# }
+
+# Update cart item quantity
+mutation UpdateCartItem($input: UpdateCartItemInput!) {
+  updateCartItem(input: $input) {
+    id
+    items {
+      id
+      productName
+      quantity
+    }
+    total
+  }
+}
+
+# Example variables:
+# {
+#   "input": {
+#     "cartId": "cart-id-here",
+#     "productId": "prod-1",
+#     "quantity": 3
+#   }
+# }
+
+# Remove item from cart
+mutation RemoveFromCart($cartId: ID!, $productId: ID!) {
+  removeFromCart(cartId: $cartId, productId: $productId) {
+    id
+    items {
+      id
+      productName
+    }
+    total
+  }
+}
+
+# Clear cart
+mutation ClearCart($cartId: ID!) {
+  clearCart(cartId: $cartId) {
+    id
+    items {
+      id
+    }
+    total
+  }
+}
+
+# Process payment - This is the main mutation for checkout
+mutation ProcessPayment($input: ProcessPaymentInput!) {
+  processPayment(input: $input) {
+    success
+    message
+    transactionId
+    order {
+      id
+      orderNumber
+      status
+      user {
+        firstName
+        lastName
+      }
+      shippingAddress {
+        streetAddress
+        city
+      }
+      items {
+        productName
+        price
+        quantity
+      }
+      total
+      estimatedDeliveryStart
+      estimatedDeliveryEnd
+      createdAt
+    }
+  }
+}
+
+# Example variables for SUCCESSFUL payment:
+# {
+#   "input": {
+#     "userId": "user-id-here",
+#     "cartId": "cart-id-here",
+#     "shippingAddressId": "address-id-here",
+#     "billingAddressId": "address-id-here",
+#     "cardNumber": "4242424242424242",
+#     "cardholderName": "John Doe",
+#     "expiryMonth": "12",
+#     "expiryYear": "25",
+#     "cvv": "123",
+#     "deliveryMethod": "STANDARD"
+#   }
+# }
+
+# Example variables for FAILED payment (card declined):
+# {
+#   "input": {
+#     "userId": "user-id-here",
+#     "cartId": "cart-id-here",
+#     "shippingAddressId": "address-id-here",
+#     "billingAddressId": "address-id-here",
+#     "cardNumber": "4000000000000002",
+#     "cardholderName": "John Doe",
+#     "expiryMonth": "12",
+#     "expiryYear": "25",
+#     "cvv": "123",
+#     "deliveryMethod": "STANDARD"
+#   }
+# }
+
+# Cancel an order
+mutation CancelOrder($orderId: ID!) {
+  cancelOrder(orderId: $orderId) {
+    id
+    orderNumber
+    status
+  }
+}
