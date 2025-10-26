@@ -33,6 +33,8 @@ This repository contains a React Native application tested and working on Androi
 
 5. **Additional Components:** Add any missing screens or models as needed.
 
+6. **Tests** Add tests and lint
+
 ## Checkout Process Notes
 
 1. Create a cart at the beginning of the process, but **do not attach a user to it initially**.
