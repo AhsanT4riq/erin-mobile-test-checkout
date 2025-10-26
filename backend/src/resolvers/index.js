@@ -6,49 +6,62 @@ const {
     getProduct,
 } = require('../data/mockData');
 
+// Helper function to simulate network delay
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 const resolvers = {
     Query: {
         // User queries
-        user: (_, { id }) => {
+        user: async (_, { id }) => {
+            await delay(500);
             return store.users.get(id) || null;
         },
-        users: () => {
+        users: async () => {
+            await delay(500);
             return Array.from(store.users.values());
         },
 
         // Cart queries
-        cart: (_, { id }) => {
+        cart: async (_, { id }) => {
+            await delay(500);
             return store.carts.get(id) || null;
         },
-        cartByUser: (_, { userId }) => {
+        cartByUser: async (_, { userId }) => {
+            await delay(500);
             const carts = Array.from(store.carts.values());
             return carts.find(cart => cart.userId === userId) || null;
         },
 
         // Address queries
-        address: (_, { id }) => {
+        address: async (_, { id }) => {
+            await delay(500);
             return store.addresses.get(id) || null;
         },
-        addressesByUser: (_, { userId }) => {
+        addressesByUser: async (_, { userId }) => {
+            await delay(500);
             const addresses = Array.from(store.addresses.values());
             return addresses.filter(addr => addr.userId === userId);
         },
 
         // Order queries
-        order: (_, { id }) => {
+        order: async (_, { id }) => {
+            await delay(500);
             return store.orders.get(id) || null;
         },
-        orderByNumber: (_, { orderNumber }) => {
+        orderByNumber: async (_, { orderNumber }) => {
+            await delay(500);
             const orders = Array.from(store.orders.values());
             return orders.find(order => order.orderNumber === orderNumber) || null;
         },
-        ordersByUser: (_, { userId }) => {
+        ordersByUser: async (_, { userId }) => {
+            await delay(500);
             const orders = Array.from(store.orders.values());
             return orders.filter(order => order.userId === userId);
         },
 
         // Payment methods
-        paymentMethods: (_, { userId }) => {
+        paymentMethods: async (_, { userId }) => {
+            await delay(500);
             const methods = Array.from(store.paymentMethods.values());
             return methods.filter(pm => pm.userId === userId);
         },
@@ -56,7 +69,8 @@ const resolvers = {
 
     Mutation: {
         // User mutations
-        createUser: (_, { input }) => {
+        createUser: async (_, { input }) => {
+            await delay(1000);
             const userId = uuidv4();
             const user = {
                 id: userId,
@@ -67,7 +81,8 @@ const resolvers = {
             return user;
         },
 
-        updateUser: (_, { id, input }) => {
+        updateUser: async (_, { id, input }) => {
+            await delay(1000);
             const user = store.users.get(id);
             if (!user) {
                 throw new Error('User not found');
@@ -77,7 +92,8 @@ const resolvers = {
             return updatedUser;
         },
 
-        deleteUser: (_, { id }) => {
+        deleteUser: async (_, { id }) => {
+            await delay(1000);
             const deleted = store.users.delete(id);
             if (!deleted) {
                 throw new Error('User not found');
@@ -86,7 +102,8 @@ const resolvers = {
         },
 
         // Address mutations
-        createAddress: (_, { input }) => {
+        createAddress: async (_, { input }) => {
+            await delay(1000);
             const addressId = uuidv4();
             const address = {
                 id: addressId,
@@ -108,7 +125,8 @@ const resolvers = {
             return address;
         },
 
-        updateAddress: (_, { id, input }) => {
+        updateAddress: async (_, { id, input }) => {
+            await delay(1000);
             const address = store.addresses.get(id);
             if (!address) {
                 throw new Error('Address not found');
@@ -118,7 +136,8 @@ const resolvers = {
             return updatedAddress;
         },
 
-        deleteAddress: (_, { id }) => {
+        deleteAddress: async (_, { id }) => {
+            await delay(1000);
             const deleted = store.addresses.delete(id);
             if (!deleted) {
                 throw new Error('Address not found');
@@ -127,7 +146,8 @@ const resolvers = {
         },
 
         // Cart mutations
-        createCart: (_, { userId }) => {
+        createCart: async (_, { userId }) => {
+            await delay(800);
             const cartId = uuidv4();
             const cart = {
                 id: cartId,
@@ -142,7 +162,8 @@ const resolvers = {
             return cart;
         },
 
-        addToCart: (_, { cartId, productId, quantity }) => {
+        addToCart: async (_, { cartId, productId, quantity }) => {
+            await delay(800);
             const cart = store.carts.get(cartId);
             if (!cart) {
                 throw new Error('Cart not found');
@@ -178,7 +199,8 @@ const resolvers = {
             return cart;
         },
 
-        updateCartItem: (_, { input }) => {
+        updateCartItem: async (_, { input }) => {
+            await delay(800);
             const cart = store.carts.get(input.cartId);
             if (!cart) {
                 throw new Error('Cart not found');
@@ -204,7 +226,8 @@ const resolvers = {
             return cart;
         },
 
-        removeFromCart: (_, { cartId, productId }) => {
+        removeFromCart: async (_, { cartId, productId }) => {
+            await delay(800);
             const cart = store.carts.get(cartId);
             if (!cart) {
                 throw new Error('Cart not found');
@@ -220,7 +243,8 @@ const resolvers = {
             return cart;
         },
 
-        clearCart: (_, { cartId }) => {
+        clearCart: async (_, { cartId }) => {
+            await delay(800);
             const cart = store.carts.get(cartId);
             if (!cart) {
                 throw new Error('Cart not found');
@@ -237,7 +261,10 @@ const resolvers = {
         },
 
         // Payment mutation
-        processPayment: (_, { input }) => {
+        processPayment: async (_, { input }) => {
+            // Simulate network delay (5 seconds for payment processing)
+            await delay(5000);
+
             // Validate user exists
             const user = store.users.get(input.userId);
             if (!user) {
@@ -409,7 +436,8 @@ const resolvers = {
         },
 
         // Order mutations
-        cancelOrder: (_, { orderId }) => {
+        cancelOrder: async (_, { orderId }) => {
+            await delay(1000);
             const order = store.orders.get(orderId);
             if (!order) {
                 throw new Error('Order not found');
