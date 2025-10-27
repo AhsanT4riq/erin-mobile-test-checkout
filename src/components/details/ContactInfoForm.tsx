@@ -1,5 +1,4 @@
 import React, { FC, Fragment } from 'react';
-import { StyleSheet } from 'react-native';
 import FormCard from '../form/FormCard';
 import FormControlTextInput from '../form/FormControlTextInput';
 import { Control } from 'react-hook-form';
@@ -19,7 +18,6 @@ const ContactInfoForm: FC<ContactInfoProps> = ({ control }) => {
           control={control}
           label="First Name"
           mode="outlined"
-          style={styles.input}
           placeholder="Enter your first name"
         />
 
@@ -29,7 +27,6 @@ const ContactInfoForm: FC<ContactInfoProps> = ({ control }) => {
           control={control}
           label="Last Name"
           mode="outlined"
-          style={styles.input}
           placeholder="Enter your last name"
         />
 
@@ -39,7 +36,6 @@ const ContactInfoForm: FC<ContactInfoProps> = ({ control }) => {
           control={control}
           label="Email Address"
           mode="outlined"
-          style={styles.input}
           placeholder="email@example.com"
           keyboardType="email-address"
         />
@@ -50,8 +46,7 @@ const ContactInfoForm: FC<ContactInfoProps> = ({ control }) => {
           control={control}
           label="Phone Number"
           mode="outlined"
-          style={styles.input}
-          placeholder="+1 (555) 123-4567"
+          placeholder="0452525252"
           keyboardType="phone-pad"
         />
       </FormCard>
@@ -62,7 +57,6 @@ const ContactInfoForm: FC<ContactInfoProps> = ({ control }) => {
           control={control}
           label="Company (Optional)"
           mode="outlined"
-          style={styles.input}
           placeholder="Company name"
         />
 
@@ -72,7 +66,6 @@ const ContactInfoForm: FC<ContactInfoProps> = ({ control }) => {
           control={control}
           label="Special Instructions (Optional)"
           mode="outlined"
-          style={styles.input}
           placeholder="Any special delivery instructions"
           multiline
           numberOfLines={4}
@@ -81,11 +74,5 @@ const ContactInfoForm: FC<ContactInfoProps> = ({ control }) => {
     </Fragment>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    marginBottom: 12,
-  },
-});
 
 export default ContactInfoForm;

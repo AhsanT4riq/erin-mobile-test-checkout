@@ -2,13 +2,38 @@ import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Text, Button } from 'react-native-paper';
 import { CartLine } from '../../store/cart/CartLine';
+import { CartItem as CartItemType } from '../../graphql/types';
 
 interface CartItemProps {
   item: CartLine;
-  removeItem: (id: string) => void;
+  removeItem: (productId: string) => void;
+  updateCartItem: (item: CartItemType) => void;
+  isRemovingItem: boolean;
+  isUpdatingItem: boolean;
 }
 
-const CartItem: FC<CartItemProps> = ({ item, removeItem }) => {
+const CartItem: FC<CartItemProps> = ({
+  item,
+  removeItem,
+  updateCartItem,
+  isRemovingItem,
+}) => {
+  const handleIncrement = () => {
+    const newQuantity = item.quantity + 1;
+    item.increment();
+    updateCartItem({ ...item, quantity: newQuantity });
+  };
+
+  const handleDecrement = () => {
+    const newQuantity = item.quantity - 1;
+    item.decrement();
+    updateCartItem({ ...item, quantity: newQuantity });
+  };
+
+  const handleRemove = () => {
+    removeItem(item.productId);
+  };
+
   return (
     <Card style={styles.card}>
       <Card.Content style={styles.gap}>
@@ -27,19 +52,23 @@ const CartItem: FC<CartItemProps> = ({ item, removeItem }) => {
           </View>
         </View>
         <View style={styles.itemRow}>
-          <Button mode="contained" onPress={() => removeItem(item.productId)}>
+          <Button
+            mode="contained"
+            onPress={handleRemove}
+            disabled={isRemovingItem}
+          >
             Remove
           </Button>
           <View style={[styles.itemRow, styles.gap]}>
             <Button
               mode={item.quantity === 1 ? 'outlined' : 'contained'}
               disabled={item.quantity === 1}
-              onPress={() => item.decrement()}
+              onPress={handleDecrement}
             >
               -
             </Button>
 
-            <Button mode="contained" onPress={() => item.increment()}>
+            <Button mode="contained" onPress={handleIncrement}>
               +
             </Button>
           </View>

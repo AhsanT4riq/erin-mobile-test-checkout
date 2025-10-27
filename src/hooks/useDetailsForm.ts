@@ -6,13 +6,14 @@ export function useDetailsForm() {
   return useForm<DetailsFormData>({
     resolver: zodResolver(detailsSchema),
     mode: 'onBlur',
+    reValidateMode: 'onBlur',
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      company: '',
-      specialInstructions: '',
+      firstName: 'Ahsan',
+      lastName: 'Tariq',
+      email: 'ahsan.tariq@erin.com',
+      phone: '1234567890',
+      company: 'Erin',
+      specialInstructions: 'No instructions',
     },
   });
 }
