@@ -1,18 +1,24 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import FormCard from '../form/FormCard';
-import { TextInput } from 'react-native-paper';
+import { Control } from 'react-hook-form';
+import { PaymentFormData } from '../../schema/paymentSchema';
+import FormControlTextInput from '../form/FormControlTextInput';
 
-interface PaymentMethodFormProps {}
+interface PaymentMethodFormProps {
+  control: Control<PaymentFormData>;
+}
 
-const PaymentMethodForm: FC<PaymentMethodFormProps> = () => {
+const PaymentMethodForm: FC<PaymentMethodFormProps> = ({ control }) => {
   return (
     <FormCard
       title="Payment Method"
       description="All transactions are secure and encrypted."
     >
       {/* Card Number */}
-      <TextInput
+      <FormControlTextInput
+        control={control}
+        name="cardNumber"
         label="Card Number"
         mode="outlined"
         style={styles.input}
@@ -21,7 +27,9 @@ const PaymentMethodForm: FC<PaymentMethodFormProps> = () => {
       />
 
       {/* Cardholder Name */}
-      <TextInput
+      <FormControlTextInput
+        control={control}
+        name="cardholderName"
         label="Cardholder Name"
         mode="outlined"
         style={styles.input}
@@ -30,14 +38,18 @@ const PaymentMethodForm: FC<PaymentMethodFormProps> = () => {
 
       {/* Expiry and CVV in a row */}
       <View style={styles.row}>
-        <TextInput
+        <FormControlTextInput
+          control={control}
+          name="expiryMonth"
           label="Expiry Date"
           mode="outlined"
           style={[styles.input, styles.halfInput]}
           placeholder="MM/YY"
           keyboardType="number-pad"
         />
-        <TextInput
+        <FormControlTextInput
+          control={control}
+          name="cvv"
           label="CVV"
           mode="outlined"
           style={[styles.input, styles.halfInput]}

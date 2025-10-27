@@ -28,7 +28,7 @@ export const paymentSchema = z
       .string()
       .regex(/^\d{3,4}$/, 'CVV must be 3 or 4 digits')
       .min(1, 'CVV is required'),
-    billingAddressSameAsShipping: z.boolean().default(true),
+    billingAddressSameAsShipping: z.boolean(),
     billingStreetAddress: z.string().optional(),
     billingCity: z.string().optional(),
     billingZipPostalCode: z.string().optional(),

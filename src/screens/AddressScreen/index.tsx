@@ -9,6 +9,7 @@ import DeliveryOptions from '../../components/address/DeliveryOptions';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
 import BottomButtons from '../../containers/BottomButton';
+import { useAddressForm } from '../../hooks/useAddressForm';
 
 type AddressScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -20,15 +21,16 @@ interface AddressScreenProps {
 }
 
 const AddressScreen: React.FC<AddressScreenProps> = ({ navigation }) => {
+  const { control } = useAddressForm();
   return (
     <Container>
       <ContentContainer>
         <HeadlineSmall title="Delivery Address" />
 
-        <DeliveryAddressForm />
+        <DeliveryAddressForm control={control} />
 
         {/* Delivery Options */}
-        <DeliveryOptions />
+        <DeliveryOptions control={control} />
       </ContentContainer>
 
       {/* Bottom Navigation Buttons */}

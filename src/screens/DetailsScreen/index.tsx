@@ -8,6 +8,7 @@ import ContactInfoForm from '../../components/details/ContactInfoForm';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
 import BottomButtons from '../../containers/BottomButton';
+import { useDetailsForm } from '../../hooks/useDetailsForm';
 
 type DetailsScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -19,13 +20,14 @@ interface DetailsScreenProps {
 }
 
 const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation }) => {
+  const { control } = useDetailsForm();
   return (
     <Container>
       <ContentContainer>
         <HeadlineSmall title="Personal Information" />
 
         {/* Personal Information */}
-        <ContactInfoForm />
+        <ContactInfoForm control={control} />
       </ContentContainer>
 
       {/* Bottom Navigation Buttons */}

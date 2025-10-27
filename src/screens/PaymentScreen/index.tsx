@@ -11,6 +11,9 @@ import PaymentMethodForm from '../../components/payment/PaymentMethodForm';
 import BillingAddressForm from '../../components/payment/BillingAddressForm';
 import SecurityNotice from '../../components/payment/SecurityNotice';
 import BottomButtons from '../../containers/BottomButton';
+import { observer } from 'mobx-react-lite';
+import { usePaymentForm } from '../../hooks/usePaymentForm';
+import { useStores } from '../../store/rootStore';
 
 type PaymentScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -21,52 +24,56 @@ interface PaymentScreenProps {
   navigation: PaymentScreenNavigationProp;
 }
 
-const PaymentScreen: React.FC<PaymentScreenProps> = ({ navigation }) => {
-  const orderSummary = {
-    itemCount: 3,
-    itemsTotal: 149.96,
-    shipping: 10,
-    tax: 12,
-    total: 171.96,
-  };
-  return (
-    <Container>
-      <ContentContainer>
-        <HeadlineSmall title="Payment Information" />
+const PaymentScreen: React.FC<PaymentScreenProps> = observer(
+  ({ navigation }) => {
+    const { control } = usePaymentForm();
+    const { cart } = useStores();
+    const orderSummary = {
+      itemCount: cart.itemCount,
+      itemsTotal: cart.subtotal,
+      shipping: cart.shippingFlat,
+      tax: cart.tax,
+      total: cart.total,
+    };
+    return (
+      <Container>
+        <ContentContainer>
+          <HeadlineSmall title="Payment Information" />
 
-        {/* Order Summary Card */}
-        <OrderSummary summary={orderSummary} />
+          {/* Order Summary Card */}
+          <OrderSummary summary={orderSummary} />
 
-        {/* Payment Method Card */}
-        <PaymentMethodForm />
+          {/* Payment Method Card */}
+          <PaymentMethodForm control={control} />
 
-        {/* Billing Address Card */}
-        <BillingAddressForm />
+          {/* Billing Address Card */}
+          <BillingAddressForm control={control} />
 
-        {/* Security Notice */}
-        <SecurityNotice />
-      </ContentContainer>
+          {/* Security Notice */}
+          <SecurityNotice />
+        </ContentContainer>
 
-      {/* Bottom Navigation Buttons */}
-      <BottomButtons style={styles.bottomButtons}>
-        <Button
-          mode="outlined"
-          onPress={() => navigation.goBack()}
-          style={[styles.button, styles.backButton]}
-        >
-          Back
-        </Button>
-        <Button
-          mode="contained"
-          onPress={() => navigation.navigate('ThankYou')}
-          style={[styles.button]}
-        >
-          Place Order
-        </Button>
-      </BottomButtons>
-    </Container>
-  );
-};
+        {/* Bottom Navigation Buttons */}
+        <BottomButtons style={styles.bottomButtons}>
+          <Button
+            mode="outlined"
+            onPress={() => navigation.goBack()}
+            style={[styles.button, styles.backButton]}
+          >
+            Back
+          </Button>
+          <Button
+            mode="contained"
+            onPress={() => navigation.navigate('ThankYou')}
+            style={[styles.button]}
+          >
+            Place Order
+          </Button>
+        </BottomButtons>
+      </Container>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   bottomButtons: {

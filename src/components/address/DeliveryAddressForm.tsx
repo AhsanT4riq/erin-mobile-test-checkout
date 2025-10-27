@@ -1,71 +1,84 @@
 import React, { FC, Fragment } from 'react';
 import { View, StyleSheet } from 'react-native';
 import FormCard from '../form/FormCard';
-import { TextInput } from 'react-native-paper';
+import { Control } from 'react-hook-form';
+import { AddressFormData } from '../../schema/addressSchema';
+import FormControlTextInput from '../form/FormControlTextInput';
 
-interface DeliveryAddressFormProps {}
+interface DeliveryAddressFormProps {
+  control: Control<AddressFormData>;
+}
 
-const DeliveryAddressForm: FC<DeliveryAddressFormProps> = () => {
+const DeliveryAddressForm: FC<DeliveryAddressFormProps> = ({ control }) => {
   return (
     <Fragment>
       <FormCard description="Where should we deliver your order?">
         {/* Address Line 1 */}
-        <TextInput
+        <FormControlTextInput
+          name="streetAddress"
+          control={control}
           label="Street Address"
           mode="outlined"
-          style={styles.input}
-          placeholder="123 Main Street"
+          placeholder=""
         />
 
         {/* Address Line 2 */}
-        <TextInput
+        <FormControlTextInput
+          name="apartmentSuite"
+          control={control}
           label="Apartment, Suite, etc. (Optional)"
           mode="outlined"
-          style={styles.input}
-          placeholder="Apt 4B"
+          placeholder=""
         />
 
         {/* City */}
-        <TextInput
-          label="City"
+        <FormControlTextInput
+          name="city"
+          control={control}
           mode="outlined"
-          style={styles.input}
-          placeholder="New York"
+          placeholder=""
+          label="City"
         />
 
         {/* State/Province and ZIP in a row */}
         <View style={styles.row}>
-          <TextInput
-            label="State/Province"
+          <FormControlTextInput
+            name="stateProvince"
+            control={control}
+            label="State"
             mode="outlined"
-            style={[styles.input, styles.halfInput]}
-            placeholder="NY"
+            style={[styles.halfInput]}
           />
-          <TextInput
-            label="ZIP/Postal Code"
+          <FormControlTextInput
+            name="zipPostalCode"
+            control={control}
+            label="Postal Code"
             mode="outlined"
-            style={[styles.input, styles.halfInput]}
-            placeholder="10001"
+            style={[styles.halfInput]}
+            placeholder=""
           />
         </View>
 
         {/* Country */}
-        <TextInput
+        <FormControlTextInput
+          name="country"
+          control={control}
           label="Country"
           mode="outlined"
-          style={styles.input}
-          placeholder="United States"
+          placeholder=""
         />
       </FormCard>
 
       <FormCard title="Delivery Instructions">
-        <TextInput
+        <FormControlTextInput
+          name="deliveryInstructions"
+          control={control}
           label="Special Delivery Instructions (Optional)"
           mode="outlined"
-          style={styles.input}
-          placeholder="Leave at front door, call on arrival, etc."
+          placeholder=""
           multiline
           numberOfLines={3}
+          style={styles.textBox}
         />
       </FormCard>
     </Fragment>
@@ -73,15 +86,16 @@ const DeliveryAddressForm: FC<DeliveryAddressFormProps> = () => {
 };
 
 const styles = StyleSheet.create({
-  input: {
-    marginBottom: 12,
-  },
   row: {
     flexDirection: 'row',
     gap: 12,
   },
   halfInput: {
     flex: 1,
+  },
+  textBox: {
+    maxHeight: 100,
+    minHeight: 60,
   },
 });
 

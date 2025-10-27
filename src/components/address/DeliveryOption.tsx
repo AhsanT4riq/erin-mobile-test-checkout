@@ -1,28 +1,38 @@
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { DeliveryOption as DeliveryOptionType } from '../../types/delivery';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-paper';
-
+import { RadioOption } from '../form/FormControlRadioGroup';
+import { RadioButton } from 'react-native-paper';
 interface DeliveryOptionProps {
-  option: DeliveryOptionType;
+  option: RadioOption;
+  onPress: (value: string) => void;
 }
 
-const DeliveryOption: FC<DeliveryOptionProps> = ({ option }) => {
+const DeliveryOption: FC<DeliveryOptionProps> = ({ option, onPress }) => {
   return (
-    <View style={styles.deliveryOption}>
-      <Text variant="bodyLarge">{option.name}</Text>
-      <Text variant="bodyMedium" style={styles.deliveryDetail}>
-        {option.description} - ${option.price.toFixed(2)}
-      </Text>
-    </View>
+    <TouchableOpacity
+      style={styles.optionContainer}
+      onPress={() => onPress(option.value)}
+    >
+      <View style={styles.deliveryOption}>
+        <Text variant="bodyLarge">{option.label}</Text>
+        <Text variant="bodyMedium" style={styles.deliveryDetail}>
+          {option.description}
+        </Text>
+      </View>
+      <RadioButton value={option.value} />
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  optionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   deliveryOption: {
     paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
   },
   deliveryDetail: {
     color: '#666',

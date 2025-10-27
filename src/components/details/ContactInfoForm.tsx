@@ -1,16 +1,22 @@
 import React, { FC, Fragment } from 'react';
 import { StyleSheet } from 'react-native';
 import FormCard from '../form/FormCard';
-import { TextInput } from 'react-native-paper';
+import FormControlTextInput from '../form/FormControlTextInput';
+import { Control } from 'react-hook-form';
+import { DetailsFormData } from '../../schema/detailsSchema';
 
-interface ContactInfoProps {}
+interface ContactInfoProps {
+  control: Control<DetailsFormData>;
+}
 
-const ContactInfoForm: FC<ContactInfoProps> = () => {
+const ContactInfoForm: FC<ContactInfoProps> = ({ control }) => {
   return (
     <Fragment>
       <FormCard description="Please provide your contact information for order updates and delivery.">
         {/* First Name */}
-        <TextInput
+        <FormControlTextInput
+          name="firstName"
+          control={control}
           label="First Name"
           mode="outlined"
           style={styles.input}
@@ -18,7 +24,9 @@ const ContactInfoForm: FC<ContactInfoProps> = () => {
         />
 
         {/* Last Name */}
-        <TextInput
+        <FormControlTextInput
+          name="lastName"
+          control={control}
           label="Last Name"
           mode="outlined"
           style={styles.input}
@@ -26,7 +34,9 @@ const ContactInfoForm: FC<ContactInfoProps> = () => {
         />
 
         {/* Email */}
-        <TextInput
+        <FormControlTextInput
+          name="email"
+          control={control}
           label="Email Address"
           mode="outlined"
           style={styles.input}
@@ -35,7 +45,9 @@ const ContactInfoForm: FC<ContactInfoProps> = () => {
         />
 
         {/* Phone */}
-        <TextInput
+        <FormControlTextInput
+          name="phone"
+          control={control}
           label="Phone Number"
           mode="outlined"
           style={styles.input}
@@ -45,7 +57,9 @@ const ContactInfoForm: FC<ContactInfoProps> = () => {
       </FormCard>
       <FormCard title="Additional Information">
         {/* Company (Optional) */}
-        <TextInput
+        <FormControlTextInput
+          name="company"
+          control={control}
           label="Company (Optional)"
           mode="outlined"
           style={styles.input}
@@ -53,7 +67,9 @@ const ContactInfoForm: FC<ContactInfoProps> = () => {
         />
 
         {/* Special Instructions */}
-        <TextInput
+        <FormControlTextInput
+          name="specialInstructions"
+          control={control}
           label="Special Instructions (Optional)"
           mode="outlined"
           style={styles.input}
