@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -10,6 +10,7 @@ import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
 import BottomButtons from '../../containers/BottomButton';
 import { useAddressForm } from '../../hooks/useAddressForm';
+import { useStores } from '../../store/rootStore';
 
 type AddressScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -21,7 +22,32 @@ interface AddressScreenProps {
 }
 
 const AddressScreen: React.FC<AddressScreenProps> = ({ navigation }) => {
-  const { control } = useAddressForm();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    trigger,
+    formState: { isValid },
+  } = useAddressForm();
+  const { address } = useStores();
+
+  useEffect(() => {
+    if (address.isComplete) {
+      reset(address.toFormData(), {
+        keepDirty: false,
+        keepTouched: false,
+        keepErrors: false,
+        keepIsSubmitted: false,
+      });
+      trigger();
+    }
+  }, [address.isComplete, reset, address, trigger]);
+
+  const handleContinue = handleSubmit(data => {
+    // Only save to local store - no API call yet
+    address.setAddressData(data);
+    navigation.navigate('Payment');
+  });
   return (
     <Container>
       <ContentContainer>
@@ -44,8 +70,9 @@ const AddressScreen: React.FC<AddressScreenProps> = ({ navigation }) => {
         </Button>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate('Payment')}
+          onPress={handleContinue}
           style={[styles.button]}
+          disabled={!isValid}
         >
           Continue to Payment
         </Button>

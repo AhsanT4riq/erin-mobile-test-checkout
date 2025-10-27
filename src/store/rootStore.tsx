@@ -1,8 +1,13 @@
 import React, { createContext, useContext } from 'react';
 import { CartStore } from './cart/CartStore';
-
+import { UserStore } from './UserStore';
+import { AddressStore } from './AddressStore';
+import { PaymentStore } from './PaymentStore';
 class RootStore {
   cart = new CartStore();
+  user = new UserStore();
+  address = new AddressStore();
+  payment = new PaymentStore();
 }
 const root = new RootStore();
 

@@ -53,7 +53,6 @@ const PaymentMethodForm: FC<PaymentMethodFormProps> = ({ control }) => {
           style={[styles.halfInput]}
           placeholder="123"
           keyboardType="number-pad"
-          secureTextEntry
         />
       </View>
     </FormCard>

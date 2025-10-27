@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -9,6 +9,7 @@ import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
 import BottomButtons from '../../containers/BottomButton';
 import { useDetailsForm } from '../../hooks/useDetailsForm';
+import { useStores } from '../../store/rootStore';
 
 type DetailsScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -20,7 +21,34 @@ interface DetailsScreenProps {
 }
 
 const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation }) => {
-  const { control } = useDetailsForm();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    trigger,
+    formState: { isValid },
+  } = useDetailsForm();
+  const { user } = useStores();
+
+  // Reset form when user data is complete
+  useEffect(() => {
+    if (user.isComplete) {
+      reset(user.toFormData(), {
+        keepDirty: false,
+        keepTouched: false,
+        keepErrors: false,
+        keepIsSubmitted: false,
+      });
+      trigger();
+    }
+  }, [user.isComplete, reset, user, trigger]);
+
+  const handleContinue = handleSubmit(data => {
+    // Only save to local store - no API call yet
+    user.setUserData(data);
+    navigation.navigate('Address');
+  });
+
   return (
     <Container>
       <ContentContainer>
@@ -41,8 +69,9 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation }) => {
         </Button>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate('Address')}
-          style={[styles.button, styles.nextButton]}
+          onPress={handleContinue}
+          style={[styles.button]}
+          disabled={!isValid}
         >
           Continue
         </Button>
@@ -63,7 +92,6 @@ const styles = StyleSheet.create({
   backButton: {
     borderColor: '#6200ee',
   },
-  nextButton: {},
 });
 
 export default DetailsScreen;

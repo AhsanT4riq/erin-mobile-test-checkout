@@ -3,8 +3,10 @@ import { CartLine } from './CartLine';
 import { Product } from '../../types/product';
 
 export class CartStore {
-  private lines = new Map<string, CartLine>();
+  readonly lines = new Map<string, CartLine>();
 
+  cartId: string | null = null;
+  cartCreationError: string | null = null;
   shippingFlat = 10;
   taxRate = 0.1;
 
@@ -36,6 +38,14 @@ export class CartStore {
     return this.itemCount === 0;
   }
 
+  setCartId(id: string) {
+    this.cartId = id;
+  }
+
+  setCartCreationError(error: string | null) {
+    this.cartCreationError = error;
+  }
+
   addItem(item: Product) {
     const existing = this.lines.get(item.productId);
     if (existing) {
@@ -53,4 +63,10 @@ export class CartStore {
   removeItem = (id: string) => {
     this.lines.delete(id);
   };
+
+  clearCart() {
+    this.cartId = null;
+    this.lines.clear();
+    this.cartCreationError = null;
+  }
 }
