@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import CartItem from '../../components/cart/CartItem';
 import OrderSummary from '../../components/cart/OrderSummary';
-import HeadlineSmall from '../../components/Headline';
+import HeadlineSmall from '../../components/shared/Headline';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
 

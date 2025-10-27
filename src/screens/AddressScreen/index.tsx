@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
-import HeadlineSmall from '../../components/Headline';
+import HeadlineSmall from '../../components/shared/Headline';
 import DeliveryAddressForm from '../../components/address/DeliveryAddressForm';
 import DeliveryOptions from '../../components/address/DeliveryOptions';
 import Container from '../../containers/Container';

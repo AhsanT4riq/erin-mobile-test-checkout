@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
-import HeadlineSmall from '../../components/Headline';
+import HeadlineSmall from '../../components/shared/Headline';
 import OrderSummary from '../../components/payment/OrderSummary';
 import PaymentMethodForm from '../../components/payment/PaymentMethodForm';
 import BillingAddressForm from '../../components/payment/BillingAddressForm';
