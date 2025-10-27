@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import HeadlineSmall from '../../components/Headline';
 import ContactInfoForm from '../../components/details/ContactInfoForm';
+import Container from '../../containers/Container';
+import ContentContainer from '../../containers/Content';
 
 type DetailsScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -17,13 +19,13 @@ interface DetailsScreenProps {
 
 const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+    <Container>
+      <ContentContainer>
         <HeadlineSmall title="Personal Information" />
 
         {/* Personal Information */}
         <ContactInfoForm />
-      </ScrollView>
+      </ContentContainer>
 
       {/* Bottom Navigation Buttons */}
       <View style={styles.bottomButtons}>
@@ -44,20 +46,11 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation }) => {
           Continue
         </Button>
       </View>
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  scrollContent: {
-    padding: 16,
-    paddingBottom: 100,
-  },
-
   bottomButtons: {
     position: 'absolute',
     bottom: 0,

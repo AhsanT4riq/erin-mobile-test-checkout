@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import CartItem from '../../components/cart/CartItem';
 import OrderSummary from '../../components/cart/OrderSummary';
 import HeadlineSmall from '../../components/Headline';
+import Container from '../../containers/Container';
+import ContentContainer from '../../containers/Content';
 
 type CartScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -48,8 +50,8 @@ const CartScreen: React.FC<CartScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+    <Container>
+      <ContentContainer>
         <HeadlineSmall title="Your Shopping Cart" />
 
         {/* Cart Item 1 */}
@@ -63,7 +65,7 @@ const CartScreen: React.FC<CartScreenProps> = ({ navigation }) => {
 
         {/* Order Summary */}
         <OrderSummary summary={orderSummary} />
-      </ScrollView>
+      </ContentContainer>
 
       {/* Bottom Action Button */}
       <View style={styles.bottomButton}>
@@ -76,19 +78,11 @@ const CartScreen: React.FC<CartScreenProps> = ({ navigation }) => {
           Proceed to Checkout
         </Button>
       </View>
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  scrollContent: {
-    padding: 16,
-    paddingBottom: 100,
-  },
   bottomButton: {
     position: 'absolute',
     bottom: 0,
