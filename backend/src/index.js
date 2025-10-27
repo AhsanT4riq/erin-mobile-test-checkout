@@ -1,14 +1,15 @@
-const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const {
   ApolloServerPluginLandingPageLocalDefault,
 } = require('@apollo/server/plugin/landingPage/default');
-const cors = require('cors');
 const bodyParser = require('body-parser');
-const typeDefs = require('./schema/typeDefs');
-const resolvers = require('./resolvers');
+const cors = require('cors');
+const express = require('express');
+
 const { initializeDefaultCart } = require('./data/mockData');
+const resolvers = require('./resolvers');
+const typeDefs = require('./schema/typeDefs');
 
 const app = express();
 const PORT = process.env.PORT || 4000;

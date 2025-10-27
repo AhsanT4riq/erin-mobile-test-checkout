@@ -1,9 +1,11 @@
 import React, { createContext, useContext } from 'react';
-import { CartStore } from './cart/CartStore';
-import { UserStore } from './UserStore';
+
 import { AddressStore } from './AddressStore';
-import { PaymentStore } from './PaymentStore';
+import { CartStore } from './cart/CartStore';
 import { OrderStore } from './OrderStore';
+import { PaymentStore } from './PaymentStore';
+import { UserStore } from './UserStore';
+
 class RootStore {
   cart = new CartStore();
   user = new UserStore();

@@ -1,7 +1,7 @@
 import React from 'react';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Checkbox, Text, HelperText } from 'react-native-paper';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 interface ControlledCheckboxProps<T extends FieldValues> {
   name: Path<T>;

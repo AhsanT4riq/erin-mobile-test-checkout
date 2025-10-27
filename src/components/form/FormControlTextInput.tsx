@@ -1,7 +1,7 @@
 import React from 'react';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { TextInput, HelperText, TextInputProps } from 'react-native-paper';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 interface FormControlTextInputProps<T extends FieldValues>
   extends Omit<TextInputProps, 'value' | 'onChangeText'> {

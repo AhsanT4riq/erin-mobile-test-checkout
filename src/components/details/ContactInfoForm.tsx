@@ -1,8 +1,9 @@
 import React, { FC, Fragment } from 'react';
+import { Control } from 'react-hook-form';
+
+import { DetailsFormData } from '../../schema/detailsSchema';
 import FormCard from '../form/FormCard';
 import FormControlTextInput from '../form/FormControlTextInput';
-import { Control } from 'react-hook-form';
-import { DetailsFormData } from '../../schema/detailsSchema';
 
 interface ContactInfoProps {
   control: Control<DetailsFormData>;

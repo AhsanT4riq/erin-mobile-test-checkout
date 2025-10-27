@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
-import FormCard from '../form/FormCard';
 import { Control } from 'react-hook-form';
+import { View, StyleSheet } from 'react-native';
+
 import { PaymentFormData } from '../../schema/paymentSchema';
+import FormCard from '../form/FormCard';
 import FormControlTextInput from '../form/FormControlTextInput';
 
 interface PaymentMethodFormProps {

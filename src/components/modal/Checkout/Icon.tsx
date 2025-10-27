@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { StepStatus } from '../../../types/checkout';
 import { Text, ActivityIndicator } from 'react-native-paper';
+
+import { StepStatus } from '../../../types/checkout';
 
 interface StepIconProps {
   status: StepStatus;

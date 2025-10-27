@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+
 import { CartItem } from '../../graphql/types';
 
 export class CartLine {

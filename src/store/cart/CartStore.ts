@@ -1,6 +1,8 @@
 import { makeAutoObservable } from 'mobx';
-import { CartLine } from './CartLine';
+
 import { Product } from '../../types/product';
+
+import { CartLine } from './CartLine';
 
 export class CartStore {
   readonly lines = new Map<string, CartLine>();

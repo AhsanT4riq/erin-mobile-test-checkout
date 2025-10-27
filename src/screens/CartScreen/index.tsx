@@ -1,24 +1,25 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Alert, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation/AppNavigator';
+import { Button , Text } from 'react-native-paper';
+
 import CartItem from '../../components/cart/CartItem';
 import OrderSummary from '../../components/cart/OrderSummary';
 import HeadlineSmall from '../../components/shared/Headline';
+import BottomButtons from '../../containers/BottomButton';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
-import BottomButtons from '../../containers/BottomButton';
-import { observer } from 'mobx-react-lite';
-import { useStores } from '../../store/rootStore';
-import { Cart } from '../../graphql/types';
-import { Text } from 'react-native-paper';
 import {
   useClearCart,
   useRemoveFromCart,
   useUpdateCartItem,
 } from '../../graphql/hooks';
-import { CartItem as CartItemType } from '../../graphql/types';
+import { Cart , CartItem as CartItemType } from '../../graphql/types';
+import { RootStackParamList } from '../../navigation/AppNavigator';
+import { useStores } from '../../store/rootStore';
+
+
 
 type CartScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,

@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Divider, Text } from 'react-native-paper';
-import { formatDate } from '../../utils/date';
+
 import { OrderDetails } from '../../types/order';
+import { formatDate } from '../../utils/date';
 
 interface OrderDetailsCardProps {
   orderDetails: OrderDetails;

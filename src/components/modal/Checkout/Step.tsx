@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
+
 import { CheckoutStep } from '../../../types/checkout';
+
 import StepIcon from './Icon';
 import StepLabel from './Label';
 

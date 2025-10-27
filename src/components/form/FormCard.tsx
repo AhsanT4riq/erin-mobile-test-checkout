@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { Card } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
-import FormHeading from './FormHeading';
+import { Card } from 'react-native-paper';
+
 import FormDescription from './FormDescription';
+import FormHeading from './FormHeading';
 
 interface FormCardProps {
   title?: string;

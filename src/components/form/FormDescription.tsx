@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { Text } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
+import { Text } from 'react-native-paper';
 
 interface FormDescriptionProps {
   desc: string;

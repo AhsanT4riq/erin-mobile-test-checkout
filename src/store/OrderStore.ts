@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+
 import { Order } from '../graphql/types';
 
 export class OrderStore {

@@ -1,11 +1,12 @@
-import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+
+import AddressScreen from '../screens/AddressScreen';
 import CartScreen from '../screens/CartScreen';
 import DetailsScreen from '../screens/DetailsScreen';
-import AddressScreen from '../screens/AddressScreen';
 import PaymentScreen from '../screens/PaymentScreen';
-import ThankYouScreen from '../screens/ThankYouScreen';
 import ProductScreen from '../screens/ProductScreen';
+import ThankYouScreen from '../screens/ThankYouScreen';
 
 export type RootStackParamList = {
   Product: undefined;
