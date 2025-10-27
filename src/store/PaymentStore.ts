@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+
 import { PaymentFormData } from '../schema/paymentSchema';
 
 export class PaymentStore {

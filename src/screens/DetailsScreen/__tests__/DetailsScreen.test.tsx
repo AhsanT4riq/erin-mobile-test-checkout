@@ -1,7 +1,8 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { render, screen } from '@testing-library/react-native';
+import React from 'react';
 import { PaperProvider } from 'react-native-paper';
+
 import DetailsScreen from '../index';
 
 const mockNavigation = {

@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
-import FormCard from '../form/FormCard';
 import { Control } from 'react-hook-form';
+import { View, StyleSheet } from 'react-native';
+
 import { PaymentFormData } from '../../schema/paymentSchema';
-import FormControlTextInput from '../form/FormControlTextInput';
+import FormCard from '../form/FormCard';
 import FormControlCheckBox from '../form/FormControlCheckBox';
+import FormControlTextInput from '../form/FormControlTextInput';
 
 interface BillingAddressFormProps {
   control: Control<PaymentFormData>;

@@ -1,13 +1,14 @@
 import React, { FC } from 'react';
+import { Control } from 'react-hook-form';
 import { StyleSheet } from 'react-native';
-import FormHeading from '../form/FormHeading';
 import { Card } from 'react-native-paper';
+
+import { DeliveryMethod } from '../../graphql/types';
+import { AddressFormData } from '../../schema/addressSchema';
 import FormControlRadioGroup, {
   RadioOption,
 } from '../form/FormControlRadioGroup';
-import { Control } from 'react-hook-form';
-import { AddressFormData } from '../../schema/addressSchema';
-import { DeliveryMethod } from '../../graphql/types';
+import FormHeading from '../form/FormHeading';
 
 interface DeliveryOptionsProps {
   control: Control<AddressFormData>;

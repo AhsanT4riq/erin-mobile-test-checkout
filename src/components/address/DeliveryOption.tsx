@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Text , RadioButton } from 'react-native-paper';
+
 import { RadioOption } from '../form/FormControlRadioGroup';
-import { RadioButton } from 'react-native-paper';
+
 interface DeliveryOptionProps {
   option: RadioOption;
   onPress: (value: string) => void;

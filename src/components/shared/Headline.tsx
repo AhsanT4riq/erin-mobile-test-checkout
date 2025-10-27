@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { Text } from 'react-native-paper';
 import { StyleSheet, StyleProp, TextStyle } from 'react-native';
+import { Text } from 'react-native-paper';
 
 interface HeadlineProps {
   title: string;

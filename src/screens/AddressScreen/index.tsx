@@ -1,15 +1,16 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation/AppNavigator';
-import HeadlineSmall from '../../components/shared/Headline';
+
 import DeliveryAddressForm from '../../components/address/DeliveryAddressForm';
 import DeliveryOptions from '../../components/address/DeliveryOptions';
+import HeadlineSmall from '../../components/shared/Headline';
+import BottomButtons from '../../containers/BottomButton';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
-import BottomButtons from '../../containers/BottomButton';
 import { useAddressForm } from '../../hooks/useAddressForm';
+import { RootStackParamList } from '../../navigation/AppNavigator';
 import { useStores } from '../../store/rootStore';
 
 type AddressScreenNavigationProp = NativeStackNavigationProp<

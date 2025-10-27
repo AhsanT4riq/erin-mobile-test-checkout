@@ -1,6 +1,7 @@
-import { detailsSchema, DetailsFormData } from '../schema/detailsSchema';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
+import { detailsSchema, DetailsFormData } from '../schema/detailsSchema';
 
 export function useDetailsForm() {
   return useForm<DetailsFormData>({

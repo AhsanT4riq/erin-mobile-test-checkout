@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Text, Divider } from 'react-native-paper';
+
 import { Cart } from '../../graphql/types';
 
 interface OrderSummaryProps {

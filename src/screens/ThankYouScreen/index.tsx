@@ -1,20 +1,21 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation/AppNavigator';
-import Container from '../../containers/Container';
-import ContentContainer from '../../containers/Content';
-import SuccessMessage from '../../components/thankyou/Success';
-import OrderDetailsCard from '../../components/thankyou/OrderDetailsCard';
+
 import DeliveryInfoCard from '../../components/thankyou/DeliveryInfoCard';
 import NextSteps from '../../components/thankyou/NextSteps';
+import OrderDetailsCard from '../../components/thankyou/OrderDetailsCard';
+import SuccessMessage from '../../components/thankyou/Success';
 import SupportCard from '../../components/thankyou/SupportCard';
 import BottomButtons from '../../containers/BottomButton';
+import Container from '../../containers/Container';
+import ContentContainer from '../../containers/Content';
+import { RootStackParamList } from '../../navigation/AppNavigator';
 import { useStores } from '../../store/rootStore';
-import { formatDateRange } from '../../utils/date';
 import { OrderDetails } from '../../types/order';
 import { formatAddress } from '../../utils/address';
+import { formatDateRange } from '../../utils/date';
 
 type ThankYouScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,

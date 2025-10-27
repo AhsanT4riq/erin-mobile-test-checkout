@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Product } from '../../types/product';
 import { Card, Text, Button } from 'react-native-paper';
+
+import { Product } from '../../types/product';
 
 interface ProductItemProps {
   item: Product;

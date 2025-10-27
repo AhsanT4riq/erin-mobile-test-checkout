@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Text, Button } from 'react-native-paper';
-import { CartLine } from '../../store/cart/CartLine';
+
 import { CartItem as CartItemType } from '../../graphql/types';
+import { CartLine } from '../../store/cart/CartLine';
 
 interface CartItemProps {
   item: CartLine;

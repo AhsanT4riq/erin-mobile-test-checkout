@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Divider, Text } from 'react-native-paper';
-import FormHeading from '../form/FormHeading';
+
 import { OrderSummary as OrderSummaryType } from '../../types/order';
+import FormHeading from '../form/FormHeading';
 
 interface OrderSummaryProps {
   summary: OrderSummaryType;

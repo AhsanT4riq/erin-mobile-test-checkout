@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Modal, Portal, ActivityIndicator } from 'react-native-paper';
+
 import HeadlineSmall from '../shared/Headline';
 
 const Loader: FC<{ visible: boolean }> = ({ visible }) => {

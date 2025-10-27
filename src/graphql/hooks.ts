@@ -1,13 +1,5 @@
 import { useQuery, useMutation, ApolloError } from '@apollo/client';
-import {
-    GET_USER,
-    GET_CART,
-    GET_CART_BY_USER,
-    GET_USER_ADDRESSES,
-    GET_ORDER,
-    GET_USER_ORDERS,
-    GET_PAYMENT_METHODS,
-} from './queries';
+
 import {
     CREATE_USER,
     UPDATE_USER,
@@ -20,6 +12,15 @@ import {
     PROCESS_PAYMENT,
     CANCEL_ORDER,
 } from './mutations';
+import {
+    GET_USER,
+    GET_CART,
+    GET_CART_BY_USER,
+    GET_USER_ADDRESSES,
+    GET_ORDER,
+    GET_USER_ORDERS,
+    GET_PAYMENT_METHODS,
+} from './queries';
 import {
     User,
     Cart,
