@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { OrderSummary as OrderSummaryType } from '../../types/cart';
 import { Card, Text, Divider } from 'react-native-paper';
+import { Cart } from '../../graphql/types';
 
 interface OrderSummaryProps {
-  summary: OrderSummaryType;
+  summary: Partial<Cart>;
 }
 
 const OrderSummary: FC<OrderSummaryProps> = ({ summary }) => {
@@ -17,15 +17,15 @@ const OrderSummary: FC<OrderSummaryProps> = ({ summary }) => {
         <Divider style={styles.divider} />
         <View style={styles.summaryRow}>
           <Text variant="bodyLarge">Subtotal:</Text>
-          <Text variant="bodyLarge">${summary.subtotal.toFixed(2)}</Text>
+          <Text variant="bodyLarge">${summary.subtotal?.toFixed(2) || 0}</Text>
         </View>
         <View style={styles.summaryRow}>
           <Text variant="bodyLarge">Shipping:</Text>
-          <Text variant="bodyLarge">${summary.shipping.toFixed(2)}</Text>
+          <Text variant="bodyLarge">${summary.shipping?.toFixed(2) || 0}</Text>
         </View>
         <View style={styles.summaryRow}>
           <Text variant="bodyLarge">Tax:</Text>
-          <Text variant="bodyLarge">${summary.tax.toFixed(2)}</Text>
+          <Text variant="bodyLarge">${summary.tax?.toFixed(2) || 0}</Text>
         </View>
         <Divider style={styles.divider} />
         <View style={styles.summaryRow}>
@@ -33,7 +33,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({ summary }) => {
             Total:
           </Text>
           <Text variant="titleLarge" style={styles.totalText}>
-            ${summary.total.toFixed(2)}
+            ${summary.total?.toFixed(2) || 0}
           </Text>
         </View>
       </Card.Content>

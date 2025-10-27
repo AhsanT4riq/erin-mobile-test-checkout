@@ -37,12 +37,12 @@ export class CartStore {
   }
 
   addItem(item: Product) {
-    const existing = this.lines.get(item.id);
+    const existing = this.lines.get(item.productId);
     if (existing) {
       existing.increment();
       return;
     }
-    this.lines.set(item.id, new CartLine({ ...item, quantity: 1 }));
+    this.lines.set(item.productId, new CartLine({ ...item, quantity: 1 }));
   }
 
   increment(id: string, by: number = 1) {

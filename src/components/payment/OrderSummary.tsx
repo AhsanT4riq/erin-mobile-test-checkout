@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Divider, Text } from 'react-native-paper';
-import { PaymentOrderSummary } from '../../types/payment';
 import FormHeading from '../form/FormHeading';
+import { OrderSummary as OrderSummaryType } from '../../types/order';
 
 interface OrderSummaryProps {
-  summary: PaymentOrderSummary;
+  summary: OrderSummaryType;
 }
 
 const OrderSummary: FC<OrderSummaryProps> = ({ summary }) => {

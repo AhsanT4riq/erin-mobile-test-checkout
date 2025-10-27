@@ -14,6 +14,7 @@ import BottomButtons from '../../containers/BottomButton';
 import { observer } from 'mobx-react-lite';
 import { usePaymentForm } from '../../hooks/usePaymentForm';
 import { useStores } from '../../store/rootStore';
+import { OrderSummary as OrderSummaryType } from '../../types/order';
 
 type PaymentScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -29,7 +30,7 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
     const { control, watch } = usePaymentForm();
     const billingAddressSameAsShipping = watch('billingAddressSameAsShipping');
     const { cart } = useStores();
-    const orderSummary = {
+    const orderSummary: OrderSummaryType = {
       itemCount: cart.itemCount,
       itemsTotal: cart.subtotal,
       shipping: cart.shippingFlat,

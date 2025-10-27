@@ -14,7 +14,7 @@ const ProductItem: FC<ProductItemProps> = ({ item, addToCart }) => {
       <Card.Content style={styles.content}>
         <View style={styles.itemRow}>
           <View style={styles.itemDetails}>
-            <Text variant="titleMedium">{item.name}</Text>
+            <Text variant="titleMedium">{item.productName}</Text>
             <Text variant="bodyMedium" style={styles.description}>
               {item.description}
             </Text>

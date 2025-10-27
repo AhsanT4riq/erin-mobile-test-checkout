@@ -11,7 +11,7 @@ import ContentContainer from '../../containers/Content';
 import BottomButtons from '../../containers/BottomButton';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../store/rootStore';
-import { OrderSummary as OrderSummaryType } from '../../types/cart';
+import { Cart } from '../../graphql/types';
 import { Text } from 'react-native-paper';
 
 type CartScreenNavigationProp = NativeStackNavigationProp<
@@ -26,7 +26,7 @@ interface CartScreenProps {
 const CartScreen: React.FC<CartScreenProps> = observer(({ navigation }) => {
   const { cart } = useStores();
 
-  const orderSummary: OrderSummaryType = {
+  const orderSummary: Partial<Cart> = {
     subtotal: cart.subtotal,
     shipping: cart.shippingFlat,
     tax: cart.tax,

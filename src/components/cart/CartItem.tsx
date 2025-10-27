@@ -14,7 +14,7 @@ const CartItem: FC<CartItemProps> = ({ item, removeItem }) => {
       <Card.Content style={styles.gap}>
         <View style={styles.itemRow}>
           <View style={styles.itemDetails}>
-            <Text variant="titleMedium">{item.name}</Text>
+            <Text variant="titleMedium">{item.productName}</Text>
             <Text variant="bodyMedium" style={styles.description}>
               {item.description}
             </Text>
@@ -27,7 +27,7 @@ const CartItem: FC<CartItemProps> = ({ item, removeItem }) => {
           </View>
         </View>
         <View style={styles.itemRow}>
-          <Button mode="contained" onPress={() => removeItem(item.id)}>
+          <Button mode="contained" onPress={() => removeItem(item.productId)}>
             Remove
           </Button>
           <View style={[styles.itemRow, styles.gap]}>
