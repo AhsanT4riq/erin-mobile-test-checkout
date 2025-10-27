@@ -10,6 +10,7 @@ import OrderDetailsCard from '../../components/thankyou/OrderDetailsCard';
 import DeliveryInfoCard from '../../components/thankyou/DeliveryInfoCard';
 import NextSteps from '../../components/thankyou/NextSteps';
 import SupportCard from '../../components/thankyou/SupportCard';
+import BottomButtons from '../../containers/BottomButton';
 
 type ThankYouScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -55,16 +56,15 @@ const ThankYouScreen: React.FC<ThankYouScreenProps> = ({ navigation }) => {
       </ContentContainer>
 
       {/* Bottom Button */}
-      <View style={styles.bottomButton}>
+      <BottomButtons>
         <Button
           mode="contained"
           onPress={() => navigation.navigate('Cart')}
           style={styles.homeButton}
-          contentStyle={styles.buttonContent}
         >
           Return to Shopping
         </Button>
-      </View>
+      </BottomButtons>
     </Container>
   );
 };
@@ -73,21 +73,8 @@ const styles = StyleSheet.create({
   scrollContent: {
     alignItems: 'center',
   },
-  bottomButton: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: 16,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-  },
   homeButton: {
     borderRadius: 8,
-  },
-  buttonContent: {
-    paddingVertical: 8,
   },
 });
 

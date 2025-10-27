@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
@@ -7,6 +7,7 @@ import HeadlineSmall from '../../components/shared/Headline';
 import ContactInfoForm from '../../components/details/ContactInfoForm';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
+import BottomButtons from '../../containers/BottomButton';
 
 type DetailsScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -28,12 +29,11 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation }) => {
       </ContentContainer>
 
       {/* Bottom Navigation Buttons */}
-      <View style={styles.bottomButtons}>
+      <BottomButtons style={styles.bottomButtons}>
         <Button
           mode="outlined"
           onPress={() => navigation.goBack()}
           style={[styles.button, styles.backButton]}
-          contentStyle={styles.buttonContent}
         >
           Back
         </Button>
@@ -41,25 +41,16 @@ const DetailsScreen: React.FC<DetailsScreenProps> = ({ navigation }) => {
           mode="contained"
           onPress={() => navigation.navigate('Address')}
           style={[styles.button, styles.nextButton]}
-          contentStyle={styles.buttonContent}
         >
           Continue
         </Button>
-      </View>
+      </BottomButtons>
     </Container>
   );
 };
 
 const styles = StyleSheet.create({
   bottomButtons: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: 16,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
     flexDirection: 'row',
     gap: 12,
   },
@@ -71,9 +62,6 @@ const styles = StyleSheet.create({
     borderColor: '#6200ee',
   },
   nextButton: {},
-  buttonContent: {
-    paddingVertical: 8,
-  },
 });
 
 export default DetailsScreen;

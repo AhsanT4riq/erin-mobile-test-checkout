@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
@@ -8,6 +8,7 @@ import DeliveryAddressForm from '../../components/address/DeliveryAddressForm';
 import DeliveryOptions from '../../components/address/DeliveryOptions';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
+import BottomButtons from '../../containers/BottomButton';
 
 type AddressScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -31,38 +32,28 @@ const AddressScreen: React.FC<AddressScreenProps> = ({ navigation }) => {
       </ContentContainer>
 
       {/* Bottom Navigation Buttons */}
-      <View style={styles.bottomButtons}>
+      <BottomButtons style={styles.bottomButtons}>
         <Button
           mode="outlined"
           onPress={() => navigation.goBack()}
           style={[styles.button, styles.backButton]}
-          contentStyle={styles.buttonContent}
         >
           Back
         </Button>
         <Button
           mode="contained"
           onPress={() => navigation.navigate('Payment')}
-          style={[styles.button, styles.nextButton]}
-          contentStyle={styles.buttonContent}
+          style={[styles.button]}
         >
           Continue to Payment
         </Button>
-      </View>
+      </BottomButtons>
     </Container>
   );
 };
 
 const styles = StyleSheet.create({
   bottomButtons: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: 16,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
     flexDirection: 'row',
     gap: 12,
   },
@@ -72,10 +63,6 @@ const styles = StyleSheet.create({
   },
   backButton: {
     borderColor: '#6200ee',
-  },
-  nextButton: {},
-  buttonContent: {
-    paddingVertical: 8,
   },
 });
 
