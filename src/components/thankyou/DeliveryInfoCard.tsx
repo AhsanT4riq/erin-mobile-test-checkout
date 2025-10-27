@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Card, Divider, Text } from 'react-native-paper';
+import { Card, Text } from 'react-native-paper';
 import { OrderDetails } from '../../types/order';
 
 interface DeliveryInfoCardProps {
@@ -8,24 +8,18 @@ interface DeliveryInfoCardProps {
 }
 
 const DeliveryInfoCard: FC<DeliveryInfoCardProps> = ({ orderDetails }) => {
-  const { deliveryAddress, estimatedDeliveryDate } = orderDetails;
+  const { shippingAddress, estimatedDeliveryDate } = orderDetails;
   return (
     <Card style={styles.card}>
       <Card.Content>
         <Text variant="titleMedium" style={styles.sectionTitle}>
           Delivery Information
         </Text>
-        <Divider style={styles.divider} />
-
-        <Text variant="bodyMedium" style={styles.addressText}>
-          {deliveryAddress.street}
+        <Text variant="bodyMedium" style={styles.estimateLabel}>
+          Address:
         </Text>
-        <Text variant="bodyMedium" style={styles.addressText}>
-          {deliveryAddress.city}, {deliveryAddress.state}{' '}
-          {deliveryAddress.zipCode}
-        </Text>
-        <Text variant="bodyMedium" style={styles.addressText}>
-          {deliveryAddress.country}
+        <Text variant="bodyLarge" style={styles.estimateDate}>
+          {shippingAddress}
         </Text>
 
         <View style={styles.estimateContainer}>

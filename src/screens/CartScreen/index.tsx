@@ -28,25 +28,20 @@ type CartScreenNavigationProp = NativeStackNavigationProp<
 interface CartScreenProps {
   navigation: CartScreenNavigationProp;
 }
-// TODO: Handle Errors
+
 const CartScreen: React.FC<CartScreenProps> = observer(({ navigation }) => {
   const { cart } = useStores();
-  const [
-    updateCartItem,
-    { loading: isUpdatingCartItem, error: updateCartItemError },
-  ] = useUpdateCartItem();
-  const [
-    removeFromCart,
-    { loading: isRemovingFromCart, error: removeFromCartError },
-  ] = useRemoveFromCart();
+  const [updateCartItem, { loading: isUpdatingCartItem }] = useUpdateCartItem();
+  const [removeFromCart, { loading: isRemovingFromCart }] = useRemoveFromCart();
   const [clearCart, { loading: isClearingCart, error: clearCartError }] =
     useClearCart();
+  const defaultShippingCost = 10; // Standard shipping cost
 
   const orderSummary: Partial<Cart> = {
     subtotal: cart.subtotal,
-    shipping: cart.shippingFlat,
+    shipping: defaultShippingCost,
     tax: cart.tax,
-    total: cart.total,
+    total: cart.getTotal(defaultShippingCost),
   };
 
   const handleUpdateCartItem = (item: CartItemType) => {

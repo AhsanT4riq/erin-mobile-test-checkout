@@ -7,7 +7,6 @@ export class CartStore {
 
   cartId: string | null = null;
   cartCreationError: string | null = null;
-  shippingFlat = 10;
   taxRate = 0.1;
 
   constructor() {
@@ -30,12 +29,12 @@ export class CartStore {
     return +(this.subtotal * this.taxRate).toFixed(2);
   }
 
-  get total(): number {
-    return +(this.subtotal + this.shippingFlat + this.tax).toFixed(2);
-  }
-
   get isEmpty(): boolean {
     return this.itemCount === 0;
+  }
+
+  getTotal(shippingCost: number): number {
+    return +(this.subtotal + shippingCost + this.tax).toFixed(2);
   }
 
   setCartId(id: string) {

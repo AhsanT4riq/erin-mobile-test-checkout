@@ -1,14 +1,15 @@
 import React, { FC } from 'react';
 import { Text } from 'react-native-paper';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StyleProp, TextStyle } from 'react-native';
 
 interface HeadlineProps {
   title: string;
+  style?: StyleProp<TextStyle>;
 }
 
-const HeadlineSmall: FC<HeadlineProps> = ({ title }) => {
+const HeadlineSmall: FC<HeadlineProps> = ({ title, style }) => {
   return (
-    <Text variant="headlineSmall" style={styles.title}>
+    <Text variant="headlineSmall" style={[styles.title, style]}>
       {title}
     </Text>
   );

@@ -3,11 +3,13 @@ import { CartStore } from './cart/CartStore';
 import { UserStore } from './UserStore';
 import { AddressStore } from './AddressStore';
 import { PaymentStore } from './PaymentStore';
+import { OrderStore } from './OrderStore';
 class RootStore {
   cart = new CartStore();
   user = new UserStore();
   address = new AddressStore();
   payment = new PaymentStore();
+  order = new OrderStore();
 }
 const root = new RootStore();
 

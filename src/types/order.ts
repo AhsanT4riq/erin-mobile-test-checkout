@@ -5,3 +5,11 @@ export interface OrderSummary {
   tax: number;
   total: number;
 }
+
+export interface OrderDetails {
+  orderNumber: string;
+  orderDate: Date;
+  orderTotal: number;
+  shippingAddress: string;
+  estimatedDeliveryDate: string;
+}

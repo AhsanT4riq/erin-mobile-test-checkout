@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, StyleSheet } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { Button } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import Container from '../../containers/Container';
@@ -20,6 +20,8 @@ import {
   useCreateUser,
   useProcessPayment,
 } from '../../graphql/hooks';
+import CheckoutProgressModal from '../../components/modal/Checkout/CheckoutProgressModal';
+import { PaymentFormData } from '../../schema/paymentSchema';
 
 type PaymentScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -30,9 +32,16 @@ interface PaymentScreenProps {
   navigation: PaymentScreenNavigationProp;
 }
 
+interface CheckoutStep {
+  id: string;
+  label: string;
+  status: 'pending' | 'processing' | 'completed' | 'error';
+  error?: string;
+}
+
 const PaymentScreen: React.FC<PaymentScreenProps> = observer(
   ({ navigation }) => {
-    const { cart, user, address, payment } = useStores();
+    const { cart, user, address, payment, order } = useStores();
     const {
       control,
       watch,
@@ -47,7 +56,11 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
     const [createAddress] = useCreateAddress();
     const [processPayment] = useProcessPayment();
     const [isProcessing, setIsProcessing] = useState(false);
-    const [processingStep, setProcessingStep] = useState('');
+    const [steps, setSteps] = useState<CheckoutStep[]>([
+      { id: 'user', label: 'Creating account', status: 'pending' },
+      { id: 'address', label: 'Saving delivery address', status: 'pending' },
+      { id: 'payment', label: 'Processing payment', status: 'pending' },
+    ]);
 
     useEffect(() => {
       if (payment.isComplete) {
@@ -61,25 +74,46 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
       }
     }, [payment.isComplete, reset, payment, trigger]);
 
-    const handlePlaceOrder = handleSubmit(async data => {
+    const updateStepStatus = (
+      stepId: string,
+      status: CheckoutStep['status'],
+      error?: string,
+    ) => {
+      setSteps(prevSteps =>
+        prevSteps.map(step =>
+          step.id === stepId ? { ...step, status, error } : step,
+        ),
+      );
+    };
+
+    const resetSteps = () => {
+      setSteps([
+        { id: 'user', label: 'Creating account', status: 'pending' },
+        {
+          id: 'address',
+          label: 'Saving delivery address',
+          status: 'pending',
+        },
+        { id: 'payment', label: 'Processing payment', status: 'pending' },
+      ]);
+    };
+
+    const executePayment = async (data: PaymentFormData) => {
       // Save to local store
       payment.setPaymentData(data);
 
       // Validate cart exists
       if (!cart.cartId) {
-        Alert.alert('Error', 'Cart information is missing. Please start over.');
+        updateStepStatus('user', 'error', 'Cart information is missing');
         return;
       }
 
-      setIsProcessing(true);
-
       try {
         // Chain Api Calls
-
         // Step 1: Create User
         let userId = user.userId;
         if (!userId) {
-          setProcessingStep('Creating User...');
+          updateStepStatus('user', 'processing');
           const userResult = await createUser({
             variables: {
               input: {
@@ -95,17 +129,19 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
           userId = userResult.data?.createUser.id || null;
 
           if (!userId) {
-            throw new Error('Failed to create user');
+            updateStepStatus('user', 'error', 'Failed to create user');
+            return;
           }
 
           // Step 1 Complete: Save user Id to local store
           user.setUserId(userId);
         }
+        updateStepStatus('user', 'completed');
 
         // Step 2: Create Address
         let addressId = address.addressId;
         if (!addressId) {
-          setProcessingStep('Creating Address...');
+          updateStepStatus('address', 'processing');
           const addressResult = await createAddress({
             variables: {
               input: {
@@ -123,12 +159,18 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
           addressId = addressResult.data?.createAddress.id || null;
 
           if (!addressId) {
-            throw new Error('Failed to save delivery address');
+            updateStepStatus(
+              'address',
+              'error',
+              'Failed to save delivery address',
+            );
+            return;
           }
 
           // Step 2 Complete: Save address Id to local store
           address.setAddressId(addressId);
         }
+        updateStepStatus('address', 'completed');
 
         // Use shipping address as billing address
         let billingAddressId = data.billingAddressSameAsShipping
@@ -137,7 +179,7 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
 
         // Create new billing address
         if (!billingAddressId) {
-          setProcessingStep('Creating Billing Address...');
+          updateStepStatus('address', 'processing');
           const billingAddressResult = await createAddress({
             variables: {
               input: {
@@ -156,12 +198,17 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
             billingAddressResult.data?.createAddress.id || null;
 
           if (!billingAddressId) {
-            throw new Error('Failed to save billing address');
+            updateStepStatus(
+              'address',
+              'error',
+              'Failed to save billing address',
+            );
+            return;
           }
         }
 
         // Step 3: Process Payment
-        setProcessingStep('Processing Payment...');
+        updateStepStatus('payment', 'processing');
         const paymentResult = await processPayment({
           variables: {
             input: {
@@ -182,69 +229,70 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
         const result = paymentResult.data?.processPayment;
 
         if (result?.success) {
+          console.log('Payment successful', result.order);
           // Payment successful
-          setProcessingStep('Order placed successfully!');
+          updateStepStatus('payment', 'completed');
 
-          // Clear local cart
+          // Save order to OrderStore
+          if (result.order) {
+            order.setOrder(result.order);
+          }
+
+          // Clear local store
           cart.clearCart();
+          user.clear();
+          address.clear();
+          payment.clear();
 
           // Navigate to thank you screen
           setTimeout(() => {
+            setIsProcessing(false);
             navigation.navigate('ThankYou');
           }, 500);
         } else {
           // Payment Failed
           const errorMessage = result?.message || 'Failed to process payment';
-          Alert.alert('Payment Failed', errorMessage, [
-            {
-              text: 'Try Again',
-              onPress: () => {
-                // User and address are already created, just retry payment
-                setIsProcessing(false);
-                setProcessingStep('');
-              },
-            },
-          ]);
+          updateStepStatus('payment', 'error', errorMessage);
         }
       } catch (error: any) {
         console.error('Checkout error:', error);
 
         // Determine which step failed and provide appropriate message
-        let errorMessage = 'An error occurred during checkout.';
-        let retryMessage = 'Please try again.';
-
-        if (processingStep.includes('user')) {
-          errorMessage = 'Failed to create user account.';
-        } else if (processingStep.includes('address')) {
-          errorMessage = 'Failed to save delivery address.';
-        } else if (processingStep.includes('payment')) {
-          errorMessage = 'Failed to process payment.';
-          retryMessage =
-            'Your information has been saved. Please try placing the order again.';
+        const currentStep = steps.find(s => s.status === 'processing');
+        if (currentStep) {
+          updateStepStatus(
+            currentStep.id,
+            'error',
+            error?.message || 'An error occurred',
+          );
         }
-
-        Alert.alert(
-          'Error',
-          `${errorMessage}\n\n${error?.message || retryMessage}`,
-          [
-            {
-              text: 'OK',
-              onPress: () => {
-                setIsProcessing(false);
-                setProcessingStep('');
-              },
-            },
-          ],
-        );
       }
-    });
+    };
 
     const orderSummary: OrderSummaryType = {
       itemCount: cart.itemCount,
       itemsTotal: cart.subtotal,
-      shipping: cart.shippingFlat,
+      shipping: address.shippingCost,
       tax: cart.tax,
-      total: cart.total,
+      total: cart.getTotal(address.shippingCost),
+    };
+
+    const handlePlaceOrder = handleSubmit(async data => {
+      payment.setPaymentData(data);
+      resetSteps();
+      setIsProcessing(true);
+      await executePayment(data);
+    });
+
+    const handleRetry = async () => {
+      resetSteps();
+      const data = payment.toFormData();
+      await executePayment(data);
+    };
+
+    const handleCloseModal = () => {
+      setIsProcessing(false);
+      resetSteps();
     };
 
     return (
@@ -266,10 +314,6 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
 
           {/* Security Notice */}
           <SecurityNotice />
-
-          {isProcessing && processingStep && (
-            <Text style={styles.processingText}>{processingStep}</Text>
-          )}
         </ContentContainer>
 
         {/* Bottom Navigation Buttons */}
@@ -284,12 +328,18 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
           <Button
             mode="contained"
             onPress={handlePlaceOrder}
-            disabled={!isValid}
+            disabled={!isValid || isProcessing}
             style={[styles.button]}
           >
             {isProcessing ? 'Processing...' : 'Place Order'}
           </Button>
         </BottomButtons>
+        <CheckoutProgressModal
+          visible={isProcessing}
+          steps={steps}
+          onRetry={handleRetry}
+          onClose={handleCloseModal}
+        />
       </Container>
     );
   },

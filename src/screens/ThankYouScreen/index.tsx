@@ -11,6 +11,10 @@ import DeliveryInfoCard from '../../components/thankyou/DeliveryInfoCard';
 import NextSteps from '../../components/thankyou/NextSteps';
 import SupportCard from '../../components/thankyou/SupportCard';
 import BottomButtons from '../../containers/BottomButton';
+import { useStores } from '../../store/rootStore';
+import { formatDateRange } from '../../utils/date';
+import { OrderDetails } from '../../types/order';
+import { formatAddress } from '../../utils/address';
 
 type ThankYouScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -22,18 +26,23 @@ interface ThankYouScreenProps {
 }
 
 const ThankYouScreen: React.FC<ThankYouScreenProps> = ({ navigation }) => {
-  const orderDetails = {
-    orderNumber: '#ORD-2024-1234',
-    orderDate: new Date(),
-    totalAmount: 171.96,
-    deliveryAddress: {
-      street: '123 Main Street',
-      city: 'New York',
-      state: 'NY',
-      zipCode: '10001',
-      country: 'United States',
-    },
-    estimatedDeliveryDate: 'Oct 27 - Oct 29, 2025',
+  const { order } = useStores();
+
+  const orderDetails: OrderDetails = {
+    orderNumber: order.orderNumber,
+    orderDate: order.orderDate,
+    orderTotal: order.orderTotal,
+    shippingAddress: formatAddress(order.shippingAddress!),
+    estimatedDeliveryDate: formatDateRange(
+      order.estimatedDeliveryStart,
+      order.estimatedDeliveryEnd,
+    ),
+  };
+
+  const handleReturnToShopping = () => {
+    // Clear order store
+    order.clear();
+    navigation.navigate('Product');
   };
 
   return (
@@ -59,7 +68,7 @@ const ThankYouScreen: React.FC<ThankYouScreenProps> = ({ navigation }) => {
       <BottomButtons>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate('Cart')}
+          onPress={handleReturnToShopping}
           style={styles.homeButton}
         >
           Return to Shopping
@@ -75,6 +84,35 @@ const styles = StyleSheet.create({
   },
   homeButton: {
     borderRadius: 8,
+  },
+  itemsCard: {
+    width: '100%',
+    backgroundColor: 'white',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 16,
+    elevation: 2,
+  },
+  itemsTitle: {
+    fontWeight: 'bold',
+    marginBottom: 12,
+  },
+  itemRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  itemInfo: {
+    flex: 1,
+  },
+  itemQuantity: {
+    color: '#666',
+    marginTop: 2,
+  },
+  itemPrice: {
+    fontWeight: '600',
   },
 });
 
