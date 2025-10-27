@@ -26,7 +26,8 @@ interface PaymentScreenProps {
 
 const PaymentScreen: React.FC<PaymentScreenProps> = observer(
   ({ navigation }) => {
-    const { control } = usePaymentForm();
+    const { control, watch } = usePaymentForm();
+    const billingAddressSameAsShipping = watch('billingAddressSameAsShipping');
     const { cart } = useStores();
     const orderSummary = {
       itemCount: cart.itemCount,
@@ -47,7 +48,10 @@ const PaymentScreen: React.FC<PaymentScreenProps> = observer(
           <PaymentMethodForm control={control} />
 
           {/* Billing Address Card */}
-          <BillingAddressForm control={control} />
+          <BillingAddressForm
+            control={control}
+            billingAddressSameAsShipping={billingAddressSameAsShipping}
+          />
 
           {/* Security Notice */}
           <SecurityNotice />

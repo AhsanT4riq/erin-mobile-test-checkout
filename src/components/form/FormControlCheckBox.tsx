@@ -28,7 +28,7 @@ const FormControlCheckBox = <T extends FieldValues>({
             onPress={() => onChange(!value)}
             activeOpacity={0.7}
           >
-            <Checkbox
+            <Checkbox.Android
               status={value ? 'checked' : 'unchecked'}
               onPress={() => onChange(!value)}
             />

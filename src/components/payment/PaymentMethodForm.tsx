@@ -21,7 +21,6 @@ const PaymentMethodForm: FC<PaymentMethodFormProps> = ({ control }) => {
         name="cardNumber"
         label="Card Number"
         mode="outlined"
-        style={styles.input}
         placeholder="1234 5678 9012 3456"
         keyboardType="number-pad"
       />
@@ -32,7 +31,6 @@ const PaymentMethodForm: FC<PaymentMethodFormProps> = ({ control }) => {
         name="cardholderName"
         label="Cardholder Name"
         mode="outlined"
-        style={styles.input}
         placeholder="John Doe"
       />
 
@@ -43,7 +41,7 @@ const PaymentMethodForm: FC<PaymentMethodFormProps> = ({ control }) => {
           name="expiryMonth"
           label="Expiry Date"
           mode="outlined"
-          style={[styles.input, styles.halfInput]}
+          style={[styles.halfInput]}
           placeholder="MM/YY"
           keyboardType="number-pad"
         />
@@ -52,7 +50,7 @@ const PaymentMethodForm: FC<PaymentMethodFormProps> = ({ control }) => {
           name="cvv"
           label="CVV"
           mode="outlined"
-          style={[styles.input, styles.halfInput]}
+          style={[styles.halfInput]}
           placeholder="123"
           keyboardType="number-pad"
           secureTextEntry

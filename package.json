@@ -12,6 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.8.10",
     "@hookform/resolvers": "^5.2.2",
+    "@react-native-vector-icons/material-design-icons": "^12.3.0",
     "@react-native/new-app-screen": "0.82.1",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",

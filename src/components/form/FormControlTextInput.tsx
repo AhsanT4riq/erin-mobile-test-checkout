@@ -8,14 +8,19 @@ interface FormControlTextInputProps<T extends FieldValues>
   name: Path<T>;
   control: Control<T>;
   defaultValue?: string;
+  hidden?: boolean;
 }
 
 const FormControlTextInput = <T extends FieldValues>({
   name,
   control,
   defaultValue = '',
+  hidden = false,
   ...textInputProps
 }: FormControlTextInputProps<T>) => {
+  if (hidden) {
+    return null;
+  }
   return (
     <Controller
       control={control}
@@ -57,7 +62,6 @@ const styles = StyleSheet.create({
   },
   errorText: {
     marginTop: 2,
-    marginBottom: -8,
   },
 });
 

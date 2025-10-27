@@ -8,9 +8,13 @@ import FormControlCheckBox from '../form/FormControlCheckBox';
 
 interface BillingAddressFormProps {
   control: Control<PaymentFormData>;
+  billingAddressSameAsShipping: boolean;
 }
 
-const BillingAddressForm: FC<BillingAddressFormProps> = ({ control }) => {
+const BillingAddressForm: FC<BillingAddressFormProps> = ({
+  control,
+  billingAddressSameAsShipping,
+}) => {
   return (
     <FormCard title="Billing Address">
       <FormControlCheckBox
@@ -23,8 +27,8 @@ const BillingAddressForm: FC<BillingAddressFormProps> = ({ control }) => {
         name="billingStreetAddress"
         label="Billing Address"
         mode="outlined"
-        style={styles.input}
         placeholder="123 Main Street"
+        hidden={billingAddressSameAsShipping}
       />
 
       <View style={styles.row}>
@@ -33,16 +37,16 @@ const BillingAddressForm: FC<BillingAddressFormProps> = ({ control }) => {
           name="billingCity"
           label="City"
           mode="outlined"
-          style={[styles.input, styles.halfInput]}
-          placeholder="New York"
+          style={[styles.halfInput]}
+          hidden={billingAddressSameAsShipping}
         />
         <FormControlTextInput
           control={control}
           name="billingZipPostalCode"
           label="ZIP Code"
           mode="outlined"
-          style={[styles.input, styles.halfInput]}
-          placeholder="10001"
+          style={[styles.halfInput]}
+          hidden={billingAddressSameAsShipping}
         />
       </View>
     </FormCard>
@@ -50,9 +54,6 @@ const BillingAddressForm: FC<BillingAddressFormProps> = ({ control }) => {
 };
 
 const styles = StyleSheet.create({
-  input: {
-    marginBottom: 12,
-  },
   row: {
     flexDirection: 'row',
     gap: 12,
