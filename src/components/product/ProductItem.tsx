@@ -5,9 +5,10 @@ import { Card, Text, Button } from 'react-native-paper';
 
 interface ProductItemProps {
   item: Product;
+  addToCart: () => void;
 }
 
-const ProductItem: FC<ProductItemProps> = ({ item }) => {
+const ProductItem: FC<ProductItemProps> = ({ item, addToCart }) => {
   return (
     <Card style={styles.card}>
       <Card.Content style={styles.content}>
@@ -22,7 +23,7 @@ const ProductItem: FC<ProductItemProps> = ({ item }) => {
             </Text>
           </View>
         </View>
-        <Button mode="contained" onPress={() => console.log('Add to cart')}>
+        <Button mode="contained" onPress={addToCart}>
           Add to Cart
         </Button>
       </Card.Content>

@@ -1,16 +1,17 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { CartItem as CartItemType } from '../../types/cart';
-import { Card, Text } from 'react-native-paper';
+import { Card, Text, Button } from 'react-native-paper';
+import { CartLine } from '../../store/cart/CartLine';
 
 interface CartItemProps {
-  item: CartItemType;
+  item: CartLine;
+  removeItem: (id: string) => void;
 }
 
-const CartItem: FC<CartItemProps> = ({ item }) => {
+const CartItem: FC<CartItemProps> = ({ item, removeItem }) => {
   return (
     <Card style={styles.card}>
-      <Card.Content>
+      <Card.Content style={styles.gap}>
         <View style={styles.itemRow}>
           <View style={styles.itemDetails}>
             <Text variant="titleMedium">{item.name}</Text>
@@ -25,6 +26,24 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
             <Text variant="bodyMedium">Qty: {item.quantity}</Text>
           </View>
         </View>
+        <View style={styles.itemRow}>
+          <Button mode="contained" onPress={() => removeItem(item.id)}>
+            Remove
+          </Button>
+          <View style={[styles.itemRow, styles.gap]}>
+            <Button
+              mode={item.quantity === 1 ? 'outlined' : 'contained'}
+              disabled={item.quantity === 1}
+              onPress={() => item.decrement()}
+            >
+              -
+            </Button>
+
+            <Button mode="contained" onPress={() => item.increment()}>
+              +
+            </Button>
+          </View>
+        </View>
       </Card.Content>
     </Card>
   );
@@ -34,6 +53,9 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: 12,
     elevation: 2,
+  },
+  gap: {
+    gap: 8,
   },
   itemRow: {
     flexDirection: 'row',

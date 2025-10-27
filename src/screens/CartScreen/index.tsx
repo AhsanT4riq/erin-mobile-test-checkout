@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/AppNavigator';
@@ -8,7 +8,11 @@ import OrderSummary from '../../components/cart/OrderSummary';
 import HeadlineSmall from '../../components/shared/Headline';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
-import { CartItem as CartItemType } from '../../types/cart';
+import BottomButtons from '../../containers/BottomButton';
+import { observer } from 'mobx-react-lite';
+import { useStores } from '../../store/rootStore';
+import { OrderSummary as OrderSummaryType } from '../../types/cart';
+import { Text } from 'react-native-paper';
 
 type CartScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -19,36 +23,26 @@ interface CartScreenProps {
   navigation: CartScreenNavigationProp;
 }
 
-const CartScreen: React.FC<CartScreenProps> = ({ navigation }) => {
-  const cartItems: CartItemType[] = [
-    {
-      id: '1',
-      name: 'Product Name 1',
-      description: 'Product description goes here',
-      price: 29.99,
-      quantity: 1,
-    },
-    {
-      id: '2',
-      name: 'Product Name 2',
-      description: 'Product description goes here',
-      price: 49.99,
-      quantity: 2,
-    },
-    {
-      id: '3',
-      name: 'Product Name 3',
-      description: 'Product description goes here',
-      price: 19.99,
-      quantity: 1,
-    },
-  ];
-  const orderSummary = {
-    subtotal: 149.96,
-    shipping: 10.0,
-    tax: 12.0,
-    total: 171.96,
+const CartScreen: React.FC<CartScreenProps> = observer(({ navigation }) => {
+  const { cart } = useStores();
+
+  const orderSummary: OrderSummaryType = {
+    subtotal: cart.subtotal,
+    shipping: cart.shippingFlat,
+    tax: cart.tax,
+    total: cart.total,
   };
+
+  if (cart.isEmpty) {
+    return (
+      <Container>
+        <ContentContainer scrollEnabled={false}>
+          <HeadlineSmall title="Your Shopping Cart" />
+          <Text>Your cart is empty</Text>
+        </ContentContainer>
+      </Container>
+    );
+  }
 
   return (
     <Container>
@@ -56,8 +50,8 @@ const CartScreen: React.FC<CartScreenProps> = ({ navigation }) => {
         <HeadlineSmall title="Your Shopping Cart" />
 
         {/* Cart Items */}
-        {cartItems.map(item => (
-          <CartItem key={item.id} item={item} />
+        {cart.items.map(item => (
+          <CartItem key={item.id} item={item} removeItem={cart.removeItem} />
         ))}
 
         {/* Order Summary */}
@@ -65,36 +59,22 @@ const CartScreen: React.FC<CartScreenProps> = ({ navigation }) => {
       </ContentContainer>
 
       {/* Bottom Action Button */}
-      <View style={styles.bottomButton}>
+      <BottomButtons>
         <Button
           mode="contained"
           onPress={() => navigation.navigate('Details')}
           style={styles.proceedButton}
-          contentStyle={styles.buttonContent}
         >
           Proceed to Checkout
         </Button>
-      </View>
+      </BottomButtons>
     </Container>
   );
-};
+});
 
 const styles = StyleSheet.create({
-  bottomButton: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: 16,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-  },
   proceedButton: {
     borderRadius: 8,
-  },
-  buttonContent: {
-    paddingVertical: 8,
   },
 });
 
