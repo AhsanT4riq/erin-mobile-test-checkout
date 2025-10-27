@@ -1,16 +1,16 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { CartItem as CartItemType } from '../../types/cart';
-import { Card, Text } from 'react-native-paper';
+import { Product } from '../../types/product';
+import { Card, Text, Button } from 'react-native-paper';
 
-interface CartItemProps {
-  item: CartItemType;
+interface ProductItemProps {
+  item: Product;
 }
 
-const CartItem: FC<CartItemProps> = ({ item }) => {
+const ProductItem: FC<ProductItemProps> = ({ item }) => {
   return (
     <Card style={styles.card}>
-      <Card.Content>
+      <Card.Content style={styles.content}>
         <View style={styles.itemRow}>
           <View style={styles.itemDetails}>
             <Text variant="titleMedium">{item.name}</Text>
@@ -21,10 +21,10 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
               ${item.price.toFixed(2)}
             </Text>
           </View>
-          <View style={styles.quantityContainer}>
-            <Text variant="bodyMedium">Qty: {item.quantity}</Text>
-          </View>
         </View>
+        <Button mode="contained" onPress={() => console.log('Add to cart')}>
+          Add to Cart
+        </Button>
       </Card.Content>
     </Card>
   );
@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: 12,
     elevation: 2,
+  },
+  content: {
+    gap: 16,
   },
   itemRow: {
     flexDirection: 'row',
@@ -51,10 +54,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  quantityContainer: {
-    justifyContent: 'center',
-    marginLeft: 16,
-  },
 });
 
-export default CartItem;
+export default ProductItem;

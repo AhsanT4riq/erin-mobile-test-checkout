@@ -8,6 +8,7 @@ import OrderSummary from '../../components/cart/OrderSummary';
 import HeadlineSmall from '../../components/shared/Headline';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
+import { CartItem as CartItemType } from '../../types/cart';
 
 type CartScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -19,24 +20,24 @@ interface CartScreenProps {
 }
 
 const CartScreen: React.FC<CartScreenProps> = ({ navigation }) => {
-  const cartItems = [
+  const cartItems: CartItemType[] = [
     {
       id: '1',
-      title: 'Product Name 1',
+      name: 'Product Name 1',
       description: 'Product description goes here',
       price: 29.99,
       quantity: 1,
     },
     {
       id: '2',
-      title: 'Product Name 2',
+      name: 'Product Name 2',
       description: 'Product description goes here',
       price: 49.99,
       quantity: 2,
     },
     {
       id: '3',
-      title: 'Product Name 3',
+      name: 'Product Name 3',
       description: 'Product description goes here',
       price: 19.99,
       quantity: 1,
@@ -54,14 +55,10 @@ const CartScreen: React.FC<CartScreenProps> = ({ navigation }) => {
       <ContentContainer>
         <HeadlineSmall title="Your Shopping Cart" />
 
-        {/* Cart Item 1 */}
-        <CartItem item={cartItems[0]} />
-
-        {/* Cart Item 2 */}
-        <CartItem item={cartItems[1]} />
-
-        {/* Cart Item 3 */}
-        <CartItem item={cartItems[2]} />
+        {/* Cart Items */}
+        {cartItems.map(item => (
+          <CartItem key={item.id} item={item} />
+        ))}
 
         {/* Order Summary */}
         <OrderSummary summary={orderSummary} />
