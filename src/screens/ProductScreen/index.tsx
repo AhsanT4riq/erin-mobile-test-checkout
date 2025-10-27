@@ -14,6 +14,7 @@ import { Text } from 'react-native-paper';
 import BottomButtons from '../../containers/BottomButton';
 import { useAddToCart, useCreateCart } from '../../graphql/hooks';
 import { products } from '../../data/products';
+import Loader from '../../components/modal/Loader';
 
 type ProductScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -48,7 +49,7 @@ const ProductScreen: React.FC<ProductScreenProps> = observer(
         }
 
         const cartId = cartResult.data.createCart.id;
-        console.log('Cart ID:', cartId);
+
         if (!cartId) {
           throw new Error('Failed to create cart');
         }
@@ -98,13 +99,16 @@ const ProductScreen: React.FC<ProductScreenProps> = observer(
             <Button
               mode="contained"
               onPress={handleProceedToCart}
-              labelStyle={{ color: 'white' }}
+              labelStyle={styles.label}
               style={styles.proceedButton}
+              disabled={isProcessing}
             >
               {isProcessing ? 'Processing...' : 'Proceed To Cart'}
             </Button>
           </BottomButtons>
         )}
+
+        <Loader visible={isProcessing} />
       </Container>
     );
   },
@@ -118,6 +122,9 @@ const styles = StyleSheet.create({
   },
   proceedButton: {
     borderRadius: 8,
+  },
+  label: {
+    color: 'white',
   },
 });
 

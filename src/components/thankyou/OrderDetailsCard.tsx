@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Divider, Text } from 'react-native-paper';
-import { OrderDetails as OrderDetailsType } from '../../types/order';
+import { formatDate } from '../../utils/date';
+import { OrderDetails } from '../../types/order';
 
 interface OrderDetailsCardProps {
-  orderDetails: OrderDetailsType;
+  orderDetails: OrderDetails;
 }
 
 const OrderDetailsCard: FC<OrderDetailsCardProps> = ({ orderDetails }) => {
@@ -21,7 +22,7 @@ const OrderDetailsCard: FC<OrderDetailsCardProps> = ({ orderDetails }) => {
             Order Number:
           </Text>
           <Text variant="bodyMedium" style={styles.value}>
-            {orderDetails.orderNumber}
+            #{orderDetails.orderNumber}
           </Text>
         </View>
 
@@ -30,7 +31,7 @@ const OrderDetailsCard: FC<OrderDetailsCardProps> = ({ orderDetails }) => {
             Order Date:
           </Text>
           <Text variant="bodyMedium" style={styles.value}>
-            {orderDetails.orderDate.toDateString()}
+            {formatDate(orderDetails.orderDate)}
           </Text>
         </View>
 
@@ -38,8 +39,8 @@ const OrderDetailsCard: FC<OrderDetailsCardProps> = ({ orderDetails }) => {
           <Text variant="bodyMedium" style={styles.label}>
             Total Amount:
           </Text>
-          <Text variant="bodyMedium" style={[styles.value, styles.amount]}>
-            ${orderDetails.totalAmount.toFixed(2)}
+          <Text variant="bodyLarge" style={[styles.value, styles.amount]}>
+            ${orderDetails.orderTotal.toFixed(2)}
           </Text>
         </View>
       </Card.Content>
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
   },
   amount: {
     color: '#6200ee',
+    fontWeight: 'bold',
     fontSize: 16,
   },
 });
