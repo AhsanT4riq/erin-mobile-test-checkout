@@ -9,12 +9,12 @@ export function useDetailsForm() {
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: {
-      firstName: 'Ahsan',
-      lastName: 'Tariq',
-      email: 'ahsan.tariq@erin.com',
-      phone: '1234567890',
-      company: 'Erin',
-      specialInstructions: 'No instructions',
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      company: '',
+      specialInstructions: '',
     },
   });
 }

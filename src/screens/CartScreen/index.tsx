@@ -2,7 +2,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Alert, StyleSheet } from 'react-native';
-import { Button , Text } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 
 import CartItem from '../../components/cart/CartItem';
 import OrderSummary from '../../components/cart/OrderSummary';
@@ -10,21 +10,12 @@ import HeadlineSmall from '../../components/shared/Headline';
 import BottomButtons from '../../containers/BottomButton';
 import Container from '../../containers/Container';
 import ContentContainer from '../../containers/Content';
-import {
-  useClearCart,
-  useRemoveFromCart,
-  useUpdateCartItem,
-} from '../../graphql/hooks';
-import { Cart , CartItem as CartItemType } from '../../graphql/types';
+import { useClearCart, useRemoveFromCart, useUpdateCartItem } from '../../graphql/hooks';
+import { Cart, CartItem as CartItemType } from '../../graphql/types';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { useStores } from '../../store/rootStore';
 
-
-
-type CartScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'Cart'
->;
+type CartScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Cart'>;
 
 interface CartScreenProps {
   navigation: CartScreenNavigationProp;
@@ -34,8 +25,7 @@ const CartScreen: React.FC<CartScreenProps> = observer(({ navigation }) => {
   const { cart } = useStores();
   const [updateCartItem, { loading: isUpdatingCartItem }] = useUpdateCartItem();
   const [removeFromCart, { loading: isRemovingFromCart }] = useRemoveFromCart();
-  const [clearCart, { loading: isClearingCart, error: clearCartError }] =
-    useClearCart();
+  const [clearCart, { loading: isClearingCart, error: clearCartError }] = useClearCart();
   const defaultShippingCost = 10; // Standard shipping cost
 
   const orderSummary: Partial<Cart> = {
@@ -66,12 +56,11 @@ const CartScreen: React.FC<CartScreenProps> = observer(({ navigation }) => {
 
   const handleClearCart = () => {
     try {
-      clearCart({ variables: { cartId: cart.cartId! } });
-      cart.clearCart();
       navigation.goBack();
+      cart.clearCart();
+      clearCart({ variables: { cartId: cart.cartId! } });
     } catch (error: any) {
-      const errorMessage =
-        error?.message || clearCartError?.message || 'Failed to clear cart';
+      const errorMessage = error?.message || clearCartError?.message || 'Failed to clear cart';
       Alert.alert('Error', errorMessage);
     }
   };
@@ -93,7 +82,7 @@ const CartScreen: React.FC<CartScreenProps> = observer(({ navigation }) => {
         <HeadlineSmall title="Your Shopping Cart" />
 
         {/* Cart Items */}
-        {cart.items.map(item => (
+        {cart.items.map((item) => (
           <CartItem
             key={item.id}
             item={item}
@@ -110,11 +99,7 @@ const CartScreen: React.FC<CartScreenProps> = observer(({ navigation }) => {
 
       {/* Bottom Action Button */}
       <BottomButtons style={styles.bottomButtons}>
-        <Button
-          mode="outlined"
-          onPress={handleClearCart}
-          style={styles.backButton}
-        >
+        <Button mode="outlined" onPress={handleClearCart} style={styles.backButton}>
           {isClearingCart ? 'Processing...' : 'Clear Cart'}
         </Button>
         <Button
