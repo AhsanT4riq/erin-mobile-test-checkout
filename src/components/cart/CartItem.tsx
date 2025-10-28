@@ -9,16 +9,9 @@ interface CartItemProps {
   item: CartLine;
   removeItem: (productId: string) => void;
   updateCartItem: (item: CartItemType) => void;
-  isRemovingItem: boolean;
-  isUpdatingItem: boolean;
 }
 
-const CartItem: FC<CartItemProps> = ({
-  item,
-  removeItem,
-  updateCartItem,
-  isRemovingItem,
-}) => {
+const CartItem: FC<CartItemProps> = ({ item, removeItem, updateCartItem }) => {
   const handleIncrement = () => {
     const newQuantity = item.quantity + 1;
     item.increment();
@@ -53,11 +46,7 @@ const CartItem: FC<CartItemProps> = ({
           </View>
         </View>
         <View style={styles.itemRow}>
-          <Button
-            mode="contained"
-            onPress={handleRemove}
-            disabled={isRemovingItem}
-          >
+          <Button mode="contained" onPress={handleRemove}>
             Remove
           </Button>
           <View style={[styles.itemRow, styles.gap]}>

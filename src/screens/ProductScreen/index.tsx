@@ -45,7 +45,7 @@ const ProductScreen: React.FC<ProductScreenProps> = observer(({ navigation }) =>
 
       const cartId = cartResult.data?.createCart.id;
 
-      if (cartId) {
+      if (!cartId) {
         setProcessingError('Cart creation failed');
         return;
       }
