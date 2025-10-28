@@ -23,8 +23,8 @@ interface CartScreenProps {
 
 const CartScreen: React.FC<CartScreenProps> = observer(({ navigation }) => {
   const { cart } = useStores();
-  const [updateCartItem, { loading: isUpdatingCartItem }] = useUpdateCartItem();
-  const [removeFromCart, { loading: isRemovingFromCart }] = useRemoveFromCart();
+  const [updateCartItem] = useUpdateCartItem();
+  const [removeFromCart] = useRemoveFromCart();
   const [clearCart, { loading: isClearingCart, error: clearCartError }] = useClearCart();
   const defaultShippingCost = 10; // Standard shipping cost
 
@@ -88,8 +88,6 @@ const CartScreen: React.FC<CartScreenProps> = observer(({ navigation }) => {
             item={item}
             removeItem={handleRemoveFromCart}
             updateCartItem={handleUpdateCartItem}
-            isRemovingItem={isRemovingFromCart}
-            isUpdatingItem={isUpdatingCartItem}
           />
         ))}
 
