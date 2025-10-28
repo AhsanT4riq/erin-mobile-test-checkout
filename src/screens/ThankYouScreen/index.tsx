@@ -14,13 +14,9 @@ import ContentContainer from '../../containers/Content';
 import { RootStackParamList } from '../../navigation/AppNavigator';
 import { useStores } from '../../store/rootStore';
 import { OrderDetails } from '../../types/order';
-import { formatAddress } from '../../utils/address';
 import { formatDateRange } from '../../utils/date';
 
-type ThankYouScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'ThankYou'
->;
+type ThankYouScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ThankYou'>;
 
 interface ThankYouScreenProps {
   navigation: ThankYouScreenNavigationProp;
@@ -33,7 +29,7 @@ const ThankYouScreen: React.FC<ThankYouScreenProps> = ({ navigation }) => {
     orderNumber: order.orderNumber,
     orderDate: order.orderDate,
     orderTotal: order.orderTotal,
-    shippingAddress: formatAddress(order.shippingAddress!),
+    shippingAddress: order.shippingAddress,
     estimatedDeliveryDate: formatDateRange(
       order.estimatedDeliveryStart,
       order.estimatedDeliveryEnd,
@@ -67,11 +63,7 @@ const ThankYouScreen: React.FC<ThankYouScreenProps> = ({ navigation }) => {
 
       {/* Bottom Button */}
       <BottomButtons>
-        <Button
-          mode="contained"
-          onPress={handleReturnToShopping}
-          style={styles.homeButton}
-        >
+        <Button mode="contained" onPress={handleReturnToShopping} style={styles.homeButton}>
           Return to Shopping
         </Button>
       </BottomButtons>

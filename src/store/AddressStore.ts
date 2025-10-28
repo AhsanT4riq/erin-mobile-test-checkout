@@ -29,18 +29,6 @@ export class AddressStore {
     );
   }
 
-  get fullAddress(): string {
-    const parts = [
-      this.streetAddress,
-      this.apartmentSuite,
-      this.city,
-      this.stateProvince,
-      this.zipPostalCode,
-      this.country,
-    ].filter(Boolean);
-    return parts.join(', ');
-  }
-
   get shippingCost(): number {
     switch (this.deliveryMethod) {
       case DeliveryMethod.STANDARD:

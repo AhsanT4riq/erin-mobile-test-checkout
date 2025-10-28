@@ -29,8 +29,16 @@ export class OrderStore {
     return this.order?.estimatedDeliveryEnd || '';
   }
 
-  get shippingAddress() {
-    return this.order?.shippingAddress;
+  get shippingAddress(): string {
+    const parts = [
+      this.order?.shippingAddress?.streetAddress,
+      this.order?.shippingAddress?.apartmentSuite,
+      this.order?.shippingAddress?.city,
+      this.order?.shippingAddress?.stateProvince,
+      this.order?.shippingAddress?.zipPostalCode,
+      this.order?.shippingAddress?.country,
+    ].filter(Boolean);
+    return parts.join(', ');
   }
 
   get userInfo() {

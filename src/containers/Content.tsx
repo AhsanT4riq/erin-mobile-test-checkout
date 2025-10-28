@@ -1,22 +1,21 @@
 import React, { FC } from 'react';
-import { StyleSheet, ScrollView, ScrollViewProps } from 'react-native';
+import { StyleSheet, ScrollViewProps } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 interface ContentContainerProps extends ScrollViewProps {
   children: React.ReactNode;
 }
 
-const ContentContainer: FC<ContentContainerProps> = ({
-  children,
-  ...props
-}) => {
+const ContentContainer: FC<ContentContainerProps> = ({ children, ...props }) => {
   const { contentContainerStyle, ...restProps } = props;
   return (
-    <ScrollView
+    <KeyboardAwareScrollView
+      keyboardShouldPersistTaps="handled"
       contentContainerStyle={[styles.scrollContent, contentContainerStyle]}
       {...restProps}
     >
       {children}
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

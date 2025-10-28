@@ -1,21 +1,30 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Modal, Portal, ActivityIndicator } from 'react-native-paper';
+import { Modal, Portal, Text, Button } from 'react-native-paper';
 
 import HeadlineSmall from '../shared/Headline';
 
-const Loader: FC<{ visible: boolean }> = ({ visible }) => {
+interface MessageModalProps {
+  visible: boolean;
+  message: string;
+  onClose: () => void;
+}
+
+const MessageModal: FC<MessageModalProps> = ({ visible, message, onClose }) => {
   return (
     <Portal>
       <Modal
         visible={visible}
         dismissable={false}
         contentContainerStyle={styles.modal}
-        testID="loader"
+        testID="message"
       >
         <View style={styles.content}>
-          <HeadlineSmall title="Processing..." />
-          <ActivityIndicator />
+          <HeadlineSmall title={'Oops!'} />
+          <Text variant="bodyMedium">{message}.</Text>
+          <Button mode="contained" onPress={onClose} style={styles.proceedButton}>
+            Close
+          </Button>
         </View>
       </Modal>
     </Portal>
@@ -33,6 +42,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  proceedButton: {
+    marginTop: 24,
+    borderRadius: 8,
+  },
 });
 
-export default Loader;
+export default MessageModal;
