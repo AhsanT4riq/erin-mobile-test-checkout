@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleSheet, ScrollViewProps, ScrollView } from 'react-native';
+import { StyleSheet, ScrollViewProps } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 interface ContentContainerProps extends ScrollViewProps {

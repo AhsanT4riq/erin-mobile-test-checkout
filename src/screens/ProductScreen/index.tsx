@@ -5,6 +5,7 @@ import { Alert, StyleSheet } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 
 import Loader from '../../components/modal/Loader';
+import MessageModal from '../../components/modal/Message';
 import ProductItem from '../../components/product/ProductItem';
 import HeadlineSmall from '../../components/shared/Headline';
 import BottomButtons from '../../containers/BottomButton';
@@ -24,10 +25,10 @@ interface ProductScreenProps {
 
 const ProductScreen: React.FC<ProductScreenProps> = observer(({ navigation }) => {
   const { cart } = useStores();
-  const [createCart, { loading: isCreatingCart, error: createCartError }] = useCreateCart();
-  const [addToCart, { loading: isAddingToCart, error: addToCartError }] = useAddToCart();
+  const [createCart, { loading: isCreatingCart }] = useCreateCart();
+  const [addToCart, { loading: isAddingToCart }] = useAddToCart();
   const isProcessing = isCreatingCart || isAddingToCart;
-  const processingError = createCartError || addToCartError;
+  const [processingError, setProcessingError] = React.useState<string | null>(null);
 
   const handleAddToCart = (product: Product) => {
     cart.addItem(product);
@@ -38,13 +39,15 @@ const ProductScreen: React.FC<ProductScreenProps> = observer(({ navigation }) =>
       const cartResult = await createCart({ variables: {} });
 
       if (!cartResult.data) {
-        throw new Error('Failed to create cart');
+        setProcessingError('Cart is empty');
+        return;
       }
 
-      const cartId = cartResult.data.createCart.id;
+      const cartId = cartResult.data?.createCart.id;
 
-      if (!cartId) {
-        throw new Error('Failed to create cart');
+      if (cartId) {
+        setProcessingError('Cart creation failed');
+        return;
       }
 
       // Set the cart ID in the checkout store
@@ -62,10 +65,8 @@ const ProductScreen: React.FC<ProductScreenProps> = observer(({ navigation }) =>
 
       navigation.navigate('Cart');
     } catch (error: any) {
-      const errorMessage =
-        error?.message || processingError?.message || 'Failed to proceed to checkout';
-      cart.setCartCreationError(errorMessage as string);
-      Alert.alert('Error', errorMessage);
+      const errorMessage = error?.message || processingError || 'Failed to proceed to checkout';
+      setProcessingError(errorMessage);
     }
   };
 
@@ -96,6 +97,11 @@ const ProductScreen: React.FC<ProductScreenProps> = observer(({ navigation }) =>
       )}
 
       <Loader visible={isProcessing} />
+      <MessageModal
+        visible={!!processingError}
+        message={processingError || ''}
+        onClose={() => setProcessingError(null)}
+      />
     </Container>
   );
 });
