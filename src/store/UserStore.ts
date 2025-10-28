@@ -19,10 +19,6 @@ export class UserStore {
     return !!(this.firstName && this.lastName && this.email && this.phone);
   }
 
-  get fullName(): string {
-    return `${this.firstName} ${this.lastName}`.trim();
-  }
-
   setUserData(data: DetailsFormData) {
     this.firstName = data.firstName;
     this.lastName = data.lastName;

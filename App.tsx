@@ -1,6 +1,7 @@
 import { ApolloProvider } from '@apollo/client';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { PaperProvider } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -11,17 +12,19 @@ import { theme } from './src/theme';
 
 const App = () => {
   return (
-    <StoreProvider>
-      <ApolloProvider client={apolloClient}>
-        <SafeAreaProvider>
+    <SafeAreaProvider>
+      <StoreProvider>
+        <ApolloProvider client={apolloClient}>
           <PaperProvider theme={theme}>
             <NavigationContainer>
-              <AppNavigator />
+              <KeyboardProvider statusBarTranslucent>
+                <AppNavigator />
+              </KeyboardProvider>
             </NavigationContainer>
           </PaperProvider>
-        </SafeAreaProvider>
-      </ApolloProvider>
-    </StoreProvider>
+        </ApolloProvider>
+      </StoreProvider>
+    </SafeAreaProvider>
   );
 };
 

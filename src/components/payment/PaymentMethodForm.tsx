@@ -12,10 +12,7 @@ interface PaymentMethodFormProps {
 
 const PaymentMethodForm: FC<PaymentMethodFormProps> = ({ control }) => {
   return (
-    <FormCard
-      title="Payment Method"
-      description="All transactions are secure and encrypted."
-    >
+    <FormCard title="Payment Method" description="All transactions are secure and encrypted.">
       {/* Card Number */}
       <FormControlTextInput
         control={control}
@@ -40,10 +37,19 @@ const PaymentMethodForm: FC<PaymentMethodFormProps> = ({ control }) => {
         <FormControlTextInput
           control={control}
           name="expiryMonth"
-          label="Expiry Date"
+          label="Expiry Month"
           mode="outlined"
           style={[styles.halfInput]}
-          placeholder="MM/YY"
+          placeholder="MM"
+          keyboardType="number-pad"
+        />
+        <FormControlTextInput
+          control={control}
+          name="expiryYear"
+          label="Expiry Year"
+          mode="outlined"
+          style={[styles.halfInput]}
+          placeholder="YY"
           keyboardType="number-pad"
         />
         <FormControlTextInput

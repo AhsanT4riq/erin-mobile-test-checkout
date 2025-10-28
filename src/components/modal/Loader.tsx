@@ -11,6 +11,7 @@ const Loader: FC<{ visible: boolean }> = ({ visible }) => {
         visible={visible}
         dismissable={false}
         contentContainerStyle={styles.modal}
+        testID="loader"
       >
         <View style={styles.content}>
           <HeadlineSmall title="Processing..." />

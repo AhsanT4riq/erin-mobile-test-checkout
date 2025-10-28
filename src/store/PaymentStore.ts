@@ -40,14 +40,6 @@ export class PaymentStore {
     );
   }
 
-  get maskedCardNumber(): string {
-    if (!this.cardNumber || this.cardNumber.length < 4) {
-      return '';
-    }
-    const lastFour = this.cardNumber.slice(-4);
-    return `**** **** **** ${lastFour}`;
-  }
-
   setPaymentData(data: PaymentFormData) {
     this.cardNumber = data.cardNumber;
     this.cardholderName = data.cardholderName;
